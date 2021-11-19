@@ -1,4 +1,5 @@
 ﻿using k8sdisturber.Models;
+using k8sdisturber.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace k8sdisturber.Controllers;
@@ -8,39 +9,22 @@ namespace k8sdisturber.Controllers;
 public class InfoController : ControllerBase
 {
 
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<InfoController> _logger;
+    private readonly InfoService infoService;
 
-    public InfoController(ILogger<WeatherForecastController> logger)
+    public InfoController(ILogger<InfoController> logger, InfoService infoService)
     {
         _logger = logger;
+        this.infoService = infoService;
     }
 
-    [HttpDelete]
-    public IActionResult Delete()
+
+    [HttpGet("")]
+    public ActionResult<Info> Info()
     {
-        _logger.LogInformation("Request service deletion. Have a nice day!");
-        return Ok();
+        return Ok(infoService.GetInfo());
     }
 
-    [HttpPost("memory")]
-    public ActionResult<MemoryRequest> AllocateMemory(MemoryRequest memoryRequest)
-    {
-        _logger.LogInformation("Request service deletion. Have a nice day!");
-        return Ok(new MemoryRequest());
-    }
 
-    [HttpGet("readyz")]
-    [Produces("text/plain")]
-    public IActionResult ReadyZ()
-    {
-        return Ok("ok");
-    }
-
-    [HttpGet("livez")]
-    [Produces("text/plain")]
-    public IActionResult LiveZ()
-    {
-        return Ok("ok");
-    }
 
 }

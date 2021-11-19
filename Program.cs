@@ -1,8 +1,11 @@
+using k8sdisturber.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<InfoService>();
 
 var app = builder.Build();
 

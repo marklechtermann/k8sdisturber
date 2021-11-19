@@ -8,9 +8,9 @@ namespace k8sdisturber.Controllers;
 public class ServiceController : ControllerBase
 {
 
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<ServiceController> _logger;
 
-    public ServiceController(ILogger<WeatherForecastController> logger)
+    public ServiceController(ILogger<ServiceController> logger)
     {
         _logger = logger;
     }
