@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 export default function Home() {
-  const [info, setInfo] = useState({ a: 1 });
+  const [info, setInfo] = useState({ ipAdresses: [] });
   useEffect(() => {
     fetchInfo();
   }, []);
@@ -12,12 +12,14 @@ export default function Home() {
     setInfo(data);
   };
 
-  const idAdresses = info.ipAdresses.map((ip) => <div key={ip}>{ip}</div>);
-
   return (
     <>
       <div>{info.hostname}</div>
-      <div>{idAdresses}</div>
+      <div>
+        {info.ipAdresses.map((ip) => (
+          <div key={ip}>{ip}</div>
+        ))}
+      </div>
       <div>{info.osVersion}</div>
       <div>{info.processorCount}</div>
       <div>{info.processId}</div>
