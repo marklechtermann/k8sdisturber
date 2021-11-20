@@ -25,6 +25,13 @@ public class AppController : ControllerBase
         return Ok();
     }
 
+    [HttpGet("slow")]
+    public IActionResult Slow(int delay)
+    {
+        Thread.Sleep(Math.Max(0, delay));
+        return Ok(Math.Max(0, delay));
+    }
+
     [HttpGet("memory")]
     public ActionResult<MemoryAllocation> GetAllocatedMegaBytes()
     {
