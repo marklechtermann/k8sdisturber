@@ -1,4 +1,5 @@
 ﻿using k8sdisturber.Models;
+using k8sdisturber.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace k8sdisturber.Controllers;
@@ -7,18 +8,19 @@ namespace k8sdisturber.Controllers;
 [Route("/api/")]
 public class AppController : ControllerBase
 {
+    private readonly ILogger<AppController> logger;
+    private readonly AppService appService;
 
-    private readonly ILogger<AppController> _logger;
-
-    public AppController(ILogger<AppController> logger)
+    public AppController(ILogger<AppController> logger, AppService appService)
     {
-        _logger = logger;
+        this.logger = logger;
+        this.appService = appService;
     }
 
     [HttpDelete]
     public IActionResult Delete()
     {
-        _logger.LogInformation("Request service deletion. Have a nice day!");
+        logger.LogInformation("Request service deletion. Have a nice day!");
         Task.Delay(2000).ContinueWith(a => { Environment.Exit(0); });
         return Ok();
     }
@@ -26,7 +28,7 @@ public class AppController : ControllerBase
     [HttpPost("memory")]
     public ActionResult<MemoryRequest> AllocateMemory(MemoryRequest memoryRequest)
     {
-        _logger.LogInformation("Request service deletion. Have a nice day!");
+        logger.LogInformation("Request service deletion. Have a nice day!");
         return Ok(new MemoryRequest());
     }
 
@@ -34,14 +36,45 @@ public class AppController : ControllerBase
     [Produces("text/plain")]
     public IActionResult ReadyZ()
     {
-        return Ok("ok");
+        return this.appService.IsReady ? Ok("ok") : StatusCode(503, "fail");
     }
 
     [HttpGet("livez")]
     [Produces("text/plain")]
     public IActionResult LiveZ()
     {
-        return Ok("ok");
+        return this.appService.IsAlive ? Ok("ok") : StatusCode(503, "fail");
     }
 
+    [HttpGet("status")]
+    public ActionResult<Status> GetStatus()
+    {
+        return new Status()
+        {
+            IsAlive = this.appService.IsAlive,
+            IsReady = this.appService.IsReady
+        };
+    }
+
+    [HttpPost("status")]
+    public ActionResult<Status> SetStatus(Status status)
+    {
+        this.appService.IsAlive = status.IsAlive;
+        this.appService.IsReady = status.IsReady;
+
+        return new Status()
+        {
+            IsAlive = this.appService.IsAlive,
+            IsReady = this.appService.IsReady
+        };
+    }
+
+    [HttpPost("temporarystatus")]
+    public ActionResult<TemporaryStatus> SetTemporaryStatus(TemporaryStatus status)
+    {
+        this.appService.SetTemoraryAliveState(status.MillisecondsIsAliveDuration, status.IsAlive);
+        this.appService.SetTemporaryReadyState(status.MillisecondsIsAliveDuration, status.IsReady);
+
+        return status;
+    }
 }
