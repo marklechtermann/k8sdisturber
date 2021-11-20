@@ -1,20 +1,47 @@
 using System.Net;
 using k8sdisturber.Models;
+using Microsoft.Extensions.Options;
 
 namespace k8sdisturber.Services;
 
 public class AppService
 {
     private readonly ILogger<AppService> logger;
+    private readonly AppOptions? options;
+    private bool isAlive = false;
+    private bool isReady = false;
+    private Task? temporaryReadyStateTask;
+    private Task? temporaryAliveStateTask;
+    private Task? readyStateDelayTask;
+    private Task? aliveStateDelayTask;
 
-    private bool isAlive = true;
-    private bool isReady = true;
-    private Task temporaryReadyStateTask;
-    private Task temporaryAliveStateTask;
-
-    public AppService(ILogger<AppService> logger)
+    public AppService(ILogger<AppService> logger, IOptions<AppOptions> options)
     {
         this.logger = logger;
+        this.options = options?.Value;
+    }
+
+    public void Initialize()
+    {
+        if (this.options != null && this.options.LivenessDelay > 0)
+        {
+            this.IsAlive = false;
+            this.SetAliveStateWithDelay(this.options.LivenessDelay, true);
+        }
+        else
+        {
+            this.IsAlive = true;
+        }
+
+        if (this.options != null && this.options.ReadinessDelay > 0)
+        {
+            this.IsReady = false;
+            this.SetReadyStateWithDelay(this.options.ReadinessDelay, true);
+        }
+        else
+        {
+            this.IsAlive = true;
+        }
     }
 
     public bool IsReady
@@ -22,8 +49,11 @@ public class AppService
         get => isReady;
         set
         {
-            isReady = value;
-            this.logger?.LogInformation($"IsReady is {this.isReady}");
+            if (isReady != value)
+            {
+                isReady = value;
+                this.logger?.LogInformation($"IsReady is {this.isReady}");
+            }
         }
     }
 
@@ -32,14 +62,17 @@ public class AppService
         get => isAlive;
         set
         {
-            isAlive = value;
-            this.logger?.LogInformation($"IsAlive is {this.isAlive}");
+            if (isAlive != value)
+            {
+                isAlive = value;
+                this.logger?.LogInformation($"IsAlive is {this.isAlive}");
+            }
         }
     }
 
     public void SetReadyStateWithDelay(int millisecondsDelay, bool isReady)
     {
-        var task = Task.Run(async () =>
+        readyStateDelayTask = Task.Run(async () =>
         {
             this.logger.LogInformation($"Set ready state to {isReady} in {millisecondsDelay} ms.");
             await Task.Delay(millisecondsDelay);
@@ -49,7 +82,7 @@ public class AppService
 
     public void SetAliveStateWithDelay(int millisecondsDelay, bool isAlive)
     {
-        var task = Task.Run(async () =>
+        aliveStateDelayTask = Task.Run(async () =>
         {
             this.logger.LogInformation($"Set alive state to {isAlive} in {millisecondsDelay} ms.");
             await Task.Delay(millisecondsDelay);
