@@ -58,6 +58,14 @@ export class NavMenu extends Component {
                     Health
                   </NavLink>
                 </NavItem>
+                <NavItem>
+                  <a
+                    className="text-light navbar-dark navbar-nav nav-link "
+                    href="/swagger"
+                  >
+                    Swagger
+                  </a>
+                </NavItem>
               </ul>
             </Collapse>
           </Container>

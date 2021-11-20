@@ -37,9 +37,7 @@ export default function Memory() {
           Here you can allocate memory. Up to 2 Gbyte can be allocated.
         </div>
         <FormGroup row>
-          <Label for="exampleEmail" sm={4}>
-            Memory (MByte)
-          </Label>
+          <Label sm={4}>Memory (MByte)</Label>
           <Col sm={8} className="mb-3">
             <Input
               id="memory"

@@ -2,19 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Col, Row, Label, Input } from "reactstrap";
 
 export default function Health() {
-  const [memorysize, setMemorysize] = useState({ allocatedMegaBytes: 0 });
-  useEffect(() => fetchMemory(), []);
+  const [memorysize, setMemorysize] = useState({
+    isAlive: true,
+    isReady: true,
+    millisecondsIsAliveDuration: 0,
+    millisecondsIsReadyDuration: 0,
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setMemory();
-  };
-
-  const fetchMemory = async () => {
-    const response = await fetch("/api/memory");
-    const data = await response.json();
-    console.log(data);
-    setMemorysize(data);
   };
 
   const setMemory = async () => {
@@ -31,24 +28,37 @@ export default function Health() {
 
   return (
     <div>
-      <h1>Memory Allocation</h1>
+      <h1>Health Status</h1>
       <Form onSubmit={handleSubmit}>
         <div className="mb-3">
           Here you can allocate memory. Up to 2 Gbyte can be allocated.
         </div>
         <FormGroup row>
-          <Label for="exampleEmail" sm={4}>
-            Memory (MByte)
-          </Label>
+          <Label sm={4}>readyz=false duration (ms)</Label>
           <Col sm={8} className="mb-3">
             <Input
               id="memory"
               name="memory"
               placeholder="with a placeholder"
               type="text"
-              value={memorysize.allocatedMegaBytes}
+              value={memorysize.millisecondsIsAliveDuration}
               onChange={(e) =>
-                setMemorysize({ allocatedMegaBytes: e.target.value })
+                setMemorysize({ millisecondsIsAliveDuration: e.target.value })
+              }
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label sm={4}>readyz=false duration (ms)</Label>
+          <Col sm={8} className="mb-3">
+            <Input
+              id="memory"
+              name="memory"
+              placeholder="with a placeholder"
+              type="text"
+              value={memorysize.millisecondsIsAliveDuration}
+              onChange={(e) =>
+                setMemorysize({ millisecondsIsAliveDuration: e.target.value })
               }
             />
           </Col>
@@ -63,6 +73,10 @@ export default function Health() {
           </Col>
         </Row>
       </Form>
+      <h1>Api</h1>
+      <div>
+        <code>http://localhost:8080/h</code>
+      </div>
     </div>
   );
 }
