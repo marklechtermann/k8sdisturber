@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Col, Row, Label, Input } from "reactstrap";
+import ApiResult from "./ApiResult";
 
 export default function Memory() {
   const [memorysize, setMemorysize] = useState({ allocatedMegaBytes: 0 });
+  const [newMemorySize, setNewMemorySize] = useState(0);
   useEffect(() => fetchMemory(), []);
 
   const handleSubmit = (event) => {
@@ -20,7 +22,7 @@ export default function Memory() {
   const setMemory = async () => {
     const response = await fetch("/api/memory", {
       method: "PUT",
-      body: JSON.stringify(memorysize),
+      body: JSON.stringify({ allocatedMegaBytes: newMemorySize }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -44,10 +46,8 @@ export default function Memory() {
               name="memory"
               placeholder="with a placeholder"
               type="text"
-              value={memorysize.allocatedMegaBytes}
-              onChange={(e) =>
-                setMemorysize({ allocatedMegaBytes: e.target.value })
-              }
+              value={newMemorySize}
+              onChange={(e) => setNewMemorySize(e.target.value)}
             />
           </Col>
         </FormGroup>
@@ -61,6 +61,13 @@ export default function Memory() {
           </Col>
         </Row>
       </Form>
+      <h1>Api</h1>
+      <div>
+        <ApiResult
+          link="/api/memory"
+          result={JSON.stringify(memorysize)}
+        ></ApiResult>
+      </div>
     </div>
   );
 }

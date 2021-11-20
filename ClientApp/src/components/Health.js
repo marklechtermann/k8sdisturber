@@ -14,6 +14,7 @@ export default function Health() {
   const [livezStatus, setLivezStatus] = useState(404);
 
   useEffect(() => {
+    fetchStatus();
     const interval = setInterval(() => {
       fetchStatus();
     }, 2000);
