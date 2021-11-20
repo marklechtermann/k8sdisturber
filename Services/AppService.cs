@@ -14,6 +14,10 @@ public class AppService
     private Task? temporaryAliveStateTask;
     private Task? readyStateDelayTask;
     private Task? aliveStateDelayTask;
+    private byte[] memory = new byte[0];
+    private int allocatedBytes;
+
+    private static Random random = new Random();
 
     public AppService(ILogger<AppService> logger, IOptions<AppOptions> options)
     {
@@ -41,6 +45,18 @@ public class AppService
         else
         {
             this.IsAlive = true;
+        }
+    }
+
+    public int AllocatedMegaBytes
+    {
+        get => memory.Length / 1000000;
+        set
+        {
+            var v = Math.Min(Math.Max(0, value), 2147);
+            memory = new byte[1000000 * v];
+            random.NextBytes(memory);
+            GC.Collect();
         }
     }
 

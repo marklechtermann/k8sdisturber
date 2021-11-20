@@ -25,11 +25,17 @@ public class AppController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("memory")]
-    public ActionResult<MemoryRequest> AllocateMemory(MemoryRequest memoryRequest)
+    [HttpGet("memory")]
+    public ActionResult<MemoryAllocation> GetAllocatedMegaBytes()
     {
-        logger.LogInformation("Request service deletion. Have a nice day!");
-        return Ok(new MemoryRequest());
+        return Ok(new MemoryAllocation() { AllocatedMegaBytes = this.appService.AllocatedMegaBytes });
+    }
+
+    [HttpPut("memory")]
+    public ActionResult<MemoryAllocation> PutAllocatedMegaBytes(MemoryAllocation memoryRequest)
+    {
+        this.appService.AllocatedMegaBytes = memoryRequest.AllocatedMegaBytes;
+        return Ok(new MemoryAllocation() { AllocatedMegaBytes = this.appService.AllocatedMegaBytes });
     }
 
     [HttpGet("readyz")]
@@ -56,7 +62,7 @@ public class AppController : ControllerBase
         };
     }
 
-    [HttpPost("status")]
+    [HttpPut("status")]
     public ActionResult<Status> SetStatus(Status status)
     {
         this.appService.IsAlive = status.IsAlive;
