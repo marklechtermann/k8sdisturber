@@ -5,12 +5,12 @@ namespace k8sdisturber.Controllers;
 
 [ApiController]
 [Route("/api/")]
-public class ServiceController : ControllerBase
+public class AppController : ControllerBase
 {
 
-    private readonly ILogger<ServiceController> _logger;
+    private readonly ILogger<AppController> _logger;
 
-    public ServiceController(ILogger<ServiceController> logger)
+    public AppController(ILogger<AppController> logger)
     {
         _logger = logger;
     }
@@ -19,6 +19,7 @@ public class ServiceController : ControllerBase
     public IActionResult Delete()
     {
         _logger.LogInformation("Request service deletion. Have a nice day!");
+        Task.Delay(2000).ContinueWith(a => { Environment.Exit(0); });
         return Ok();
     }
 
