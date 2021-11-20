@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Col, Row, Label, Input } from "reactstrap";
+import ApiResult from "./ApiResult";
 
 export default function Health() {
   const [memorysize, setMemorysize] = useState({
@@ -8,6 +9,18 @@ export default function Health() {
     millisecondsIsAliveDuration: 0,
     millisecondsIsReadyDuration: 0,
   });
+
+  const [readyzStatus, setReadyzStatus] = useState(404);
+  const [livezStatus, setLivezStatus] = useState(404);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchStatus();
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -26,8 +39,22 @@ export default function Health() {
     setMemorysize(data);
   };
 
+  const fetchStatus = async () => {
+    fetch("/api/readyz")
+      .then((r) => setReadyzStatus(r.status))
+      .catch((r) => {
+        setReadyzStatus(r.status);
+      });
+    fetch("/api/livez")
+      .then((r) => setLivezStatus(r.status))
+      .catch((r) => {
+        setLivezStatus(r.status);
+      });
+  };
+
   return (
     <div>
+      {readyzStatus}
       <h1>Health Status</h1>
       <Form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -75,7 +102,9 @@ export default function Health() {
       </Form>
       <h1>Api</h1>
       <div>
-        <code>http://localhost:8080/h</code>
+        <ApiResult link="/api/readyz" statusCode={livezStatus}></ApiResult>
+        <br />
+        <ApiResult link="/api/livez" statusCode={readyzStatus}></ApiResult>
       </div>
     </div>
   );
