@@ -3,9 +3,9 @@ import { Button, Form, FormGroup, Col, Row, Label, Input } from "reactstrap";
 import ApiResult from "./ApiResult";
 
 export default function Health() {
-  const [memorysize, setMemorysize] = useState({
-    isAlive: true,
-    isReady: true,
+  const [temporaryStatus, setTemporaryStatus] = useState({
+    isAlive: false,
+    isReady: false,
     millisecondsIsAliveDuration: 0,
     millisecondsIsReadyDuration: 0,
   });
@@ -24,19 +24,19 @@ export default function Health() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setMemory();
+    postTemporaryStatus();
   };
 
-  const setMemory = async () => {
-    const response = await fetch("/api/memory", {
-      method: "PUT",
-      body: JSON.stringify(memorysize),
+  const postTemporaryStatus = async () => {
+    const response = await fetch("/api/temporarystatus", {
+      method: "POST",
+      body: JSON.stringify(temporaryStatus),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const data = await response.json();
-    setMemorysize(data);
+    setTemporaryStatus(data);
   };
 
   const fetchStatus = async () => {
@@ -54,11 +54,10 @@ export default function Health() {
 
   return (
     <div>
-      {readyzStatus}
-      <h1>Health Status</h1>
+      <h1>ReadyZ and LiveZ</h1>
       <Form onSubmit={handleSubmit}>
         <div className="mb-3">
-          Here you can allocate memory. Up to 2 Gbyte can be allocated.
+          Here you can set the readyz and livez status temporary.
         </div>
         <FormGroup row>
           <Label sm={4}>readyz=false duration (ms)</Label>
@@ -68,28 +67,33 @@ export default function Health() {
               name="memory"
               placeholder="with a placeholder"
               type="text"
-              value={memorysize.millisecondsIsAliveDuration}
-              onChange={(e) =>
-                setMemorysize({ millisecondsIsAliveDuration: e.target.value })
-              }
+              value={temporaryStatus.millisecondsIsReadyDuration}
+              onChange={(e) => {
+                let a = { ...temporaryStatus };
+                a.millisecondsIsReadyDuration = e.target.value;
+                setTemporaryStatus(a);
+              }}
             />
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label sm={4}>readyz=false duration (ms)</Label>
+          <Label sm={4}>livez=false duration (ms)</Label>
           <Col sm={8} className="mb-3">
             <Input
               id="memory"
               name="memory"
               placeholder="with a placeholder"
               type="text"
-              value={memorysize.millisecondsIsAliveDuration}
-              onChange={(e) =>
-                setMemorysize({ millisecondsIsAliveDuration: e.target.value })
-              }
+              value={temporaryStatus.millisecondsIsAliveDuration}
+              onChange={(e) => {
+                let a = { ...temporaryStatus };
+                a.millisecondsIsAliveDuration = e.target.value;
+                setTemporaryStatus(a);
+              }}
             />
           </Col>
         </FormGroup>
+
         <Row className="mb-3">
           <Col sm={4}></Col>
           <Col sm={8}>
@@ -102,9 +106,9 @@ export default function Health() {
       </Form>
       <h1>Api</h1>
       <div>
-        <ApiResult link="/api/readyz" statusCode={livezStatus}></ApiResult>
+        <ApiResult link="/api/readyz" statusCode={readyzStatus}></ApiResult>
         <br />
-        <ApiResult link="/api/livez" statusCode={readyzStatus}></ApiResult>
+        <ApiResult link="/api/livez" statusCode={livezStatus}></ApiResult>
       </div>
     </div>
   );

@@ -86,7 +86,7 @@ public class AppController : ControllerBase
     public ActionResult<TemporaryStatus> SetTemporaryStatus(TemporaryStatus status)
     {
         this.appService.SetTemoraryAliveState(status.MillisecondsIsAliveDuration, status.IsAlive);
-        this.appService.SetTemporaryReadyState(status.MillisecondsIsAliveDuration, status.IsReady);
+        this.appService.SetTemporaryReadyState(status.MillisecondsIsReadyDuration, status.IsReady);
 
         return status;
     }

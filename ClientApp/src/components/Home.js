@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "reactstrap";
-import Memory from "./Memory";
 
 export default function Home() {
   const [info, setInfo] = useState({

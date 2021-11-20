@@ -4,7 +4,8 @@ export default function ApiResult(props) {
   return (
     <>
       <code>
-        {window.location.protocol}//
+        {window.location.protocol}
+        {"//"}
         {window.location.host}
         {props.link}
         {props.statusCode && (
