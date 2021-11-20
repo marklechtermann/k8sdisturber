@@ -44,7 +44,7 @@ public class AppService
         }
         else
         {
-            this.IsAlive = true;
+            this.IsReady = true;
         }
     }
 
