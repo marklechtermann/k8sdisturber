@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "reactstrap";
+import Memory from "./Memory";
 
 export default function Home() {
-  const [info, setInfo] = useState({ ipAdresses: [] });
+  const [info, setInfo] = useState({
+    ipAdresses: [],
+    environmentVariables: [],
+  });
   useEffect(() => {
     fetchInfo();
   }, []);
@@ -15,48 +19,51 @@ export default function Home() {
 
   return (
     <>
-      <h4>Info</h4>
-      <div>{info.hostname}</div>
-      <div>
-        {info.ipAdresses.map((ip) => (
-          <div key={ip}>{ip}</div>
-        ))}
-      </div>
-      <div>{info.osVersion}</div>
-      <div>{info.processorCount}</div>
-      <div>{info.processId}</div>
+      <h1>Info</h1>
+      <Table dark borderless>
+        <tbody>
+          <tr>
+            <td>Hostname</td>
+            <td>{info.hostname}</td>
+          </tr>
+          <tr>
+            <td>OS version</td>
+            <td>{info.osVersion}</td>
+          </tr>
+          <tr>
+            <td>Processor count</td>
+            <td>{info.processorCount}</td>
+          </tr>
+          <tr>
+            <td>Process ID</td>
+            <td>{info.processId}</td>
+          </tr>
+          <tr>
+            <td>IP adresses</td>
+            <td>
+              {info.ipAdresses.map((ip) => (
+                <div key={ip}>{ip}</div>
+              ))}
+            </td>
+          </tr>
+        </tbody>
+      </Table>
 
-      <h4>Variables</h4>
-      <h4>Payment</h4>
-
+      <h1>Variables</h1>
       <Table dark borderless>
         <thead>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Key</th>
+            <th>Value</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {Object.entries(info.environmentVariables).map((a) => (
+            <tr key={a[0]}>
+              <td>{a[0]}</td>
+              <td>{a[1]}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </>

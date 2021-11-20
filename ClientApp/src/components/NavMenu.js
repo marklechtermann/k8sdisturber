@@ -34,27 +34,28 @@ export class NavMenu extends Component {
       <header>
         <Navbar
           className="navcustom navbar-expand-sm navbar-toggleable-sm  mb-3"
-          light
+          dark
         >
           <Container>
             <NavbarBrand className="navcustom" tag={Link} to="/">
               k8sdisturber
             </NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse
-              className="d-sm-inline-flex flex-sm-row-reverse"
-              isOpen={!this.state.collapsed}
-              navbar
-            >
+            <Collapse className="" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
                   <NavLink tag={Link} className="text-light" to="/">
-                    Home
+                    Info
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-light" to="/counter">
-                    Counter
+                  <NavLink tag={Link} className="text-light" to="/memory">
+                    Memory
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-light" to="/health">
+                    Health
                   </NavLink>
                 </NavItem>
               </ul>
