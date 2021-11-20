@@ -28,6 +28,11 @@ export default function Health() {
     postTemporaryStatus();
   };
 
+  const handleSubmitDanger = (event) => {
+    event.preventDefault();
+    deleteApplication();
+  };
+
   const postTemporaryStatus = async () => {
     const response = await fetch("/api/temporarystatus", {
       method: "POST",
@@ -38,6 +43,13 @@ export default function Health() {
     });
     const data = await response.json();
     setTemporaryStatus(data);
+  };
+
+  const deleteApplication = async () => {
+    const response = await fetch("/api", {
+      method: "DELETE",
+    });
+    await response.json();
   };
 
   const fetchStatus = async () => {
@@ -105,6 +117,20 @@ export default function Health() {
           </Col>
         </Row>
       </Form>
+
+      <h1>Danger Zone</h1>
+      <Form onSubmit={handleSubmitDanger}>
+        <Row className="mb-3">
+          <Col sm={4}></Col>
+          <Col sm={8}>
+            {" "}
+            <Button type="submit" color="danger">
+              Kill Application!
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+
       <h1>Api</h1>
       <div>
         <ApiResult link="/api/readyz" statusCode={readyzStatus}></ApiResult>
