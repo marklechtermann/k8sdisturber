@@ -51,10 +51,18 @@ public class AppService
         get => memory.Length / 1000000;
         set
         {
-            var v = Math.Min(Math.Max(0, value), 2147);
-            memory = new byte[1000000 * v];
-            random.NextBytes(memory);
-            GC.Collect();
+            try
+            {
+                var v = Math.Min(Math.Max(0, value), 2147);
+                memory = new byte[1000000 * v];
+                random.NextBytes(memory);
+                GC.Collect();
+            }
+            catch (OutOfMemoryException)
+            {
+                this.logger.LogError("Out of memory! Terminating Application");
+                Environment.Exit(1);
+            }
         }
     }
 
