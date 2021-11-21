@@ -6,9 +6,16 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
 WORKDIR /source
 
 COPY src .
+
 RUN dotnet publish -c release -o /app 
 
+
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
+
 WORKDIR /app
+
 COPY --from=build /app .
+
+ENV ASPNETCORE_URLS=http://+:80
+
 ENTRYPOINT ["dotnet", "k8sdisturber.dll"]

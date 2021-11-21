@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k8sdisturber
+  name: k8sdisturber
+  namespace: k8sdisturber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8sdisturber
+  template:
+    metadata:
+      labels:
+        app: k8sdisturber
+    spec:
+      containers:
+        - image: marklechtermann/k8sdisturber
+          name: k8sdisturber
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8sdisturber
+  namespace: k8sdisturber
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: k8sdisturber
+                port:
+                  number: 80
