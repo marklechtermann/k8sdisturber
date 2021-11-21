@@ -42,12 +42,20 @@ export default function Home() {
             <td>{info.version}</td>
           </tr>
           <tr>
+            <td>Instance ID</td>
+            <td>{info.instanceId}</td>
+          </tr>
+          <tr>
             <td>Hostname</td>
             <td>{info.hostname}</td>
           </tr>
           <tr>
             <td>Username</td>
             <td>{info.userName}</td>
+          </tr>
+          <tr>
+            <td>User ID</td>
+            <td>{info.userId}</td>
           </tr>
           <tr>
             <td>OS version</td>

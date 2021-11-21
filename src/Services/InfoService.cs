@@ -7,6 +7,13 @@ namespace k8sdisturber.Services
 {
     public class InfoService
     {
+        private static readonly string instanceGuid = "";
+
+        static InfoService()
+        {
+            instanceGuid = Guid.NewGuid().ToString();
+        }
+
         public Info GetInfo()
         {
             var envs = Environment.GetEnvironmentVariables();
@@ -35,7 +42,9 @@ namespace k8sdisturber.Services
                 ProcessId = Environment.ProcessId,
                 EnvironmentVariables = environmentVariables,
                 Version = Environment.GetEnvironmentVariable("K8SVERSION"),
-                UserName = Environment.UserName
+                UserName = Environment.UserName,
+                UserId = Mono.Unix.UnixUserInfo.GetRealUserId(),
+                InstanceId = instanceGuid
             };
         }
 
