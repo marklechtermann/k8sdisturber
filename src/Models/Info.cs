@@ -8,5 +8,5 @@ public class Info
     public string? OsVersion { get; set; }
     public int ProcessorCount { get; set; }
     public int ProcessId { get; set; }
-    public Dictionary<string, string>? EnvironmentVariables { get; set; }
+    public IDictionary<string, string>? EnvironmentVariables { get; set; }
 }

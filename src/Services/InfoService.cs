@@ -1,48 +1,48 @@
 using System.Net;
 using k8sdisturber.Models;
-using System.Linq;
 using System.Collections;
+using System.Linq;
 
-namespace k8sdisturber.Services;
-
-public class InfoService
+namespace k8sdisturber.Services
 {
-
-    public Info GetInfo()
+    public class InfoService
     {
-
-        var envs = Environment.GetEnvironmentVariables();
-        Dictionary<string, string> environmentVariables = new Dictionary<string, string>();
-
-        foreach (DictionaryEntry de in envs)
+        public Info GetInfo()
         {
-            if (de.Key != null && de.Value != null)
+            var envs = Environment.GetEnvironmentVariables();
+            Dictionary<string, string> environmentVariables = new Dictionary<string, string>();
+
+            foreach (DictionaryEntry de in envs)
             {
-                var key = de.Key.ToString();
-                var value = de.Value.ToString();
-                if (key != null && value != null)
+                if (de.Key != null && de.Value != null)
                 {
-                    environmentVariables.Add(key, value);
+                    var key = de.Key.ToString();
+                    var value = de.Value.ToString();
+                    if (key != null && value != null)
+                    {
+                        environmentVariables.Add(key, value);
+                    }
                 }
             }
+            environmentVariables = environmentVariables.OrderBy(kvp => kvp.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+            return new Info()
+            {
+                Hostname = Dns.GetHostName(),
+                IpAdresses = GetLocalIPAddress(),
+                OsVersion = Environment.OSVersion.VersionString,
+                ProcessorCount = Environment.ProcessorCount,
+                ProcessId = Environment.ProcessId,
+                EnvironmentVariables = environmentVariables,
+                Version = Environment.GetEnvironmentVariable("K8SVERSION")
+            };
         }
 
-        return new Info()
+        public static IEnumerable<string> GetLocalIPAddress()
         {
-            Hostname = Dns.GetHostName(),
-            IpAdresses = GetLocalIPAddress(),
-            OsVersion = Environment.OSVersion.VersionString,
-            ProcessorCount = Environment.ProcessorCount,
-            ProcessId = Environment.ProcessId,
-            EnvironmentVariables = environmentVariables,
-            Version = Environment.GetEnvironmentVariable("K8SVERSION")
-        };
-    }
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            return host.AddressList.Select(i => i.ToString());
+        }
 
-    public static IEnumerable<string> GetLocalIPAddress()
-    {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        return host.AddressList.Select(i => i.ToString());
     }
-
 }
