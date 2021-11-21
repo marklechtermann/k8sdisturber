@@ -22,6 +22,10 @@ export default function Home() {
       <Table dark borderless>
         <tbody>
           <tr>
+            <td>Application Version</td>
+            <td>{info.version}</td>
+          </tr>
+          <tr>
             <td>Hostname</td>
             <td>{info.hostname}</td>
           </tr>

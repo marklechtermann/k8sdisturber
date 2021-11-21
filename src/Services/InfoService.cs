@@ -34,7 +34,8 @@ public class InfoService
             OsVersion = Environment.OSVersion.VersionString,
             ProcessorCount = Environment.ProcessorCount,
             ProcessId = Environment.ProcessId,
-            EnvironmentVariables = environmentVariables
+            EnvironmentVariables = environmentVariables,
+            Version = Environment.GetEnvironmentVariable("K8SVERSION")
         };
     }
 
