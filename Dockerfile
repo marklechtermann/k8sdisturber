@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get install -y nodejs
+    apt-get install -y nodejs 
 
 WORKDIR /source
 
@@ -15,6 +15,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 ARG K8SVERSION=local
 
 WORKDIR /app
+
+RUN apt update && \
+    apt install -y htop curl net-tools vim &&\
+    apt-get clean
 
 COPY --from=build /app .
 
