@@ -21,7 +21,7 @@ public class AppController : ControllerBase
     public IActionResult Delete()
     {
         logger.LogInformation("Request service deletion. Have a nice day!");
-        Task.Delay(2000).ContinueWith(a => { Environment.Exit(0); });
+        Task.Delay(2000).ContinueWith(a => { Environment.Exit(1); });
         return Ok();
     }
 
