@@ -16,3 +16,5 @@ jobs:
         run: |
           echo 1
           echo 2
+      - name: Docker test
+        run: docker --version
