@@ -34,7 +34,8 @@ namespace k8sdisturber.Services
                 ProcessorCount = Environment.ProcessorCount,
                 ProcessId = Environment.ProcessId,
                 EnvironmentVariables = environmentVariables,
-                Version = Environment.GetEnvironmentVariable("K8SVERSION")
+                Version = Environment.GetEnvironmentVariable("K8SVERSION"),
+                UserName = Environment.UserName
             };
         }
 

@@ -25,4 +25,6 @@ COPY --from=build /app .
 ENV ASPNETCORE_URLS=http://+:80
 ENV K8SVERSION=${K8SVERSION}
 
+USER 1000
+
 ENTRYPOINT ["dotnet", "k8sdisturber.dll"]

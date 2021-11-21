@@ -9,4 +9,5 @@ public class Info
     public int ProcessorCount { get; set; }
     public int ProcessId { get; set; }
     public IDictionary<string, string>? EnvironmentVariables { get; set; }
+    public string? UserName { get; internal set; }
 }

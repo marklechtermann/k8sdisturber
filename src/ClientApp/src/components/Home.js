@@ -46,6 +46,10 @@ export default function Home() {
             <td>{info.hostname}</td>
           </tr>
           <tr>
+            <td>Username</td>
+            <td>{info.userName}</td>
+          </tr>
+          <tr>
             <td>OS version</td>
             <td>{info.osVersion}</td>
           </tr>

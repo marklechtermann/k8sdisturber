@@ -21,6 +21,17 @@ spec:
           ports:
           - containerPort: 80
           imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /api/livez
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /api/readyz
+              port: 80
+            periodSeconds: 3
           resources:
             requests:
               memory: "100Mi"
