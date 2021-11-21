@@ -15,8 +15,6 @@ public class AppService
     private Task? readyStateDelayTask;
     private Task? aliveStateDelayTask;
     private byte[] memory = new byte[0];
-    private int allocatedBytes;
-
     private static Random random = new Random();
 
     public AppService(ILogger<AppService> logger, IOptions<AppOptions> options)
