@@ -11,6 +11,8 @@ public class AppController : ControllerBase
     private readonly ILogger<AppController> logger;
     private readonly AppService appService;
 
+    private static readonly object slowLock = new object();
+
     public AppController(ILogger<AppController> logger, AppService appService)
     {
         this.logger = logger;
@@ -28,8 +30,16 @@ public class AppController : ControllerBase
     [HttpGet("slow")]
     public IActionResult Slow(int delay)
     {
-        Thread.Sleep(Math.Max(0, delay));
-        return Ok(Math.Max(0, delay));
+        var start = DateTime.Now;
+        logger.LogInformation("Slow Request: Enter...");
+        lock (slowLock)
+        {
+            logger.LogInformation($"Slow Request: Wait {delay}...");
+            Thread.Sleep(Math.Max(0, delay));
+        }
+        logger.LogInformation($"Slow Request: Finished");
+        var duration = (DateTime.Now - start).TotalMilliseconds;
+        return Ok($"{Math.Max(0, duration)} ms");
     }
 
     [HttpGet("memory")]

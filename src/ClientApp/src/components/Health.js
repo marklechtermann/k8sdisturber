@@ -78,7 +78,6 @@ export default function Health() {
             <Input
               id="memory"
               name="memory"
-              placeholder="with a placeholder"
               type="text"
               value={temporaryStatus.millisecondsIsReadyDuration}
               onChange={(e) => {
@@ -95,7 +94,6 @@ export default function Health() {
             <Input
               id="memory"
               name="memory"
-              placeholder="with a placeholder"
               type="text"
               value={temporaryStatus.millisecondsIsAliveDuration}
               onChange={(e) => {

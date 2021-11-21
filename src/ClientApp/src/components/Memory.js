@@ -44,7 +44,6 @@ export default function Memory() {
             <Input
               id="memory"
               name="memory"
-              placeholder="with a placeholder"
               type="text"
               value={newMemorySize}
               onChange={(e) => setNewMemorySize(e.target.value)}

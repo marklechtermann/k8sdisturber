@@ -59,6 +59,11 @@ export class NavMenu extends Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink tag={Link} className="text-light" to="/heavy">
+                    Heavy Load
+                  </NavLink>
+                </NavItem>
+                <NavItem>
                   <a
                     className="text-light navbar-dark navbar-nav nav-link "
                     href="/swagger"
