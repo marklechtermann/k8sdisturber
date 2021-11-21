@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "reactstrap";
+import { Table, Button } from "reactstrap";
+import { IoRefreshCircleSharp } from "react-icons/io5";
+import { BiAlbum } from "react-icons/bi";
 
 export default function Home() {
   const [info, setInfo] = useState({
@@ -18,7 +20,21 @@ export default function Home() {
 
   return (
     <>
-      <h1>Info</h1>
+      <h1>
+        Info
+        <Button
+          color="secondary"
+          size="sm"
+          style={{ marginLeft: "1rem", marginBottom: "1rem" }}
+          onClick={() => fetchInfo()}
+        >
+          <IoRefreshCircleSharp
+            size="2rem"
+            style={{ paddingTop: "0", paddingBottom: "0rem" }}
+          ></IoRefreshCircleSharp>
+        </Button>
+        <span></span>
+      </h1>
       <Table dark borderless>
         <tbody>
           <tr>
