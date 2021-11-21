@@ -16,9 +16,10 @@ jobs:
         run: |
           echo 123 ${{ secrets.DOCKER_PASSWORD }} 123
           echo 123 ${{ secrets.DOCKER_PASSWORD }} 123
-      - name: Docker test
-        run: docker --version
-      - name: Docker Login
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-      - name: Docker build
-        run: docker build -t marklechtermann/k8sdisturber:latest -t marklechtermann/k8sdisturber:123 .
+          env
+      # - name: Docker Login
+      #   run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      # - name: Docker build
+      #   run: docker build -t marklechtermann/k8sdisturber:latest -t marklechtermann/k8sdisturber:123 .
+      # - name: Docker Logout
+      #   run: docker logout
