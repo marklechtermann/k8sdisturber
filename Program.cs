@@ -3,6 +3,13 @@ using k8sdisturber;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.ConfigureLogging(b => b.AddSimpleConsole(options =>
+    {
+        options.IncludeScopes = false;
+        options.SingleLine = true;
+        options.TimestampFormat = "hh:mm:ss ";
+    }));
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
