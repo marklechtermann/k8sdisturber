@@ -18,6 +18,7 @@ export default function HeavyLoad() {
   const [log, setLog] = useState([]);
   const [parallelRequests, setParallelRequests] = useState(5);
   const [requestRunning, setRequestRunning] = useState(false);
+  const [durationAll, setDurationAll] = useState(0);
 
   const checkParallelRequest = () =>
     parallelRequests >= 1 && parallelRequests <= 10;
@@ -26,10 +27,10 @@ export default function HeavyLoad() {
   const handleSubmit = async (e) => {
     setLog([]);
     e.preventDefault();
-    x();
+    calculate();
   };
 
-  const x = async () => {
+  const calculate = async () => {
     setRequestRunning(true);
     let urls = [];
     for (let i = 1; i <= parallelRequests; i++) {
@@ -40,23 +41,56 @@ export default function HeavyLoad() {
     const responses = await Promise.all(requests);
     const json = responses.map((response) => response.json());
     let data = await Promise.all(json);
+
+    data = data.map((d) => {
+      return {
+        ...d,
+        start: new Date(d.start),
+        end: new Date(d.end),
+      };
+    });
+
+    const sortByStartFastesFirst = data.sort((a, b) => a.start - b.start);
+    const sortByEndFastesFirst = data.sort((a, b) => a.end - b.end);
+    const start = sortByStartFastesFirst[0].start;
+    const end = sortByEndFastesFirst.at(-1).end;
+
+    const overallDuration = end - start;
+    const faktor = 100 / overallDuration;
+
     data = data.sort((a, b) => a.duration - b.duration);
     const max = data.at(-1).duration;
+    const p3 = overallDuration * faktor;
+
+    setDurationAll(overallDuration);
+
     setLog(
       data.map((info) => {
         const v = parseInt((info.duration / max) * 100);
+        const duration = info.end - info.start;
+
+        const p1 = (info.start - start) * faktor;
+        const p2 = (info.end - start) * faktor;
+
+        console.log(info.start);
+
         return (
           <div key={uuidv4()}>
             <code>
-              Response received after{" "}
-              <span style={{ color: "yellow" }}>{info.duration}</span> from{" "}
+              Response from{" "}
+              <span style={{ color: "yellow" }}>({info.instanceId})</span>{" "}
               <span style={{ color: "yellow" }}>{info.hostname}</span>{" "}
-              <span style={{ color: "yellow" }}>({info.instanceId})</span>
             </code>
-            <Progress color="success" value={v} />
+
+            <Progress multi>
+              <Progress bar color="dark" value={p1} />
+              <Progress bar color="primary" value={p2 - p1}>
+                <div className="text-center">{duration} ms</div>
+              </Progress>
+              <Progress bar color="dark" value={p3 - p2} />
+            </Progress>
           </div>
         );
-        // ]);
       })
     );
     setRequestRunning(false);
@@ -131,6 +165,11 @@ export default function HeavyLoad() {
         </Row>
       </Form>
       <h1>Response:</h1>
+      <div>
+        <code>
+          Duration <span style={{ color: "yellow" }}>{durationAll} ms</span>
+        </code>
+      </div>
       <div>{log}</div>
     </>
   );

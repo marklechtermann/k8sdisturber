@@ -2,7 +2,9 @@ namespace k8sdisturber.Models
 {
     public class SlowRequest
     {
-        public double Duration { get; set; }
+        public DateTime Start { get; set; }
+
+        public DateTime End { get; set; }
 
         public string? InstanceId { get; set; }
 
