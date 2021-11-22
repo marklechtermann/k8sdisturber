@@ -1,6 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Mono&display=swap");
+
 body {
   /* background-color: black; */
   color: white;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.form-control {
+  border-radius: 0;
 }
 
 :root {
@@ -46,20 +56,18 @@ body {
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg-rgb: 255, 255, 255;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --bs-font-sans-serif: "Noto Sans", sans-serif;
+  --bs-font-monospace: "Noto Sans Mono", monospace;
   --bs-gradient: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.15),
+    rgba(10, 5, 5, 0.15),
     rgba(255, 255, 255, 0)
   );
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1rem;
-  --bs-body-font-weight: 400;
+  --bs-body-font-weight: 100;
   --bs-body-line-height: 1.5;
   --bs-body-color: #e2e8ee;
   --bs-body-bg: #181a20;
+  --bash-color-bg: #414657;
 }

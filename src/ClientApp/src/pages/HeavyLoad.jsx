@@ -12,16 +12,17 @@ import {
 } from "reactstrap";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Bash from "../components/Bash";
 
 export default function HeavyLoad() {
-  const [delay, setDelay] = useState(100);
+  const [delay, setDelay] = useState(500);
   const [log, setLog] = useState([]);
-  const [parallelRequests, setParallelRequests] = useState(5);
+  const [parallelRequests, setParallelRequests] = useState(10);
   const [requestRunning, setRequestRunning] = useState(false);
   const [durationAll, setDurationAll] = useState(0);
 
   const checkParallelRequest = () =>
-    parallelRequests >= 1 && parallelRequests <= 10;
+    parallelRequests >= 1 && parallelRequests <= 20;
   const checkDelay = () => parseInt(delay) >= 0;
 
   const handleSubmit = async (e) => {
@@ -104,6 +105,9 @@ export default function HeavyLoad() {
           processed sequentially by the backend. If you increase the number of
           replicates, then more requests from the client can be executed in
           parallel.
+          <Bash>
+            kubectl scale --replicas 10 --namespace k8sdisturber
+          </Bash>
         </div>
         <FormGroup row>
           <Label sm={4}>Number of prallel requests:</Label>
