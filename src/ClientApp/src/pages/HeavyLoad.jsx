@@ -107,7 +107,7 @@ export default function HeavyLoad() {
           parallel.
           <p/>
           <Bash>
-            kubectl scale --replicas 10 --namespace k8sdisturber
+          kubectl scale --replicas 10 --namespace k8sdisturber deploy/k8sdisturber
           </Bash>
         </div>
         <FormGroup row>
