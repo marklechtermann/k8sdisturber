@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Col, Row, Label, Input } from "reactstrap";
-import ApiResult from "./ApiResult";
+import ApiResult from "../components/ApiResult";
 
 export default function Memory() {
   const [memorysize, setMemorysize] = useState({ allocatedMegaBytes: 0 });
@@ -15,7 +15,6 @@ export default function Memory() {
   const fetchMemory = async () => {
     const response = await fetch("/api/memory");
     const data = await response.json();
-    console.log(data);
     setMemorysize(data);
   };
 
@@ -42,6 +41,7 @@ export default function Memory() {
           <Label sm={4}>Memory (MByte)</Label>
           <Col sm={8} className="mb-3">
             <Input
+              autoComplete="nope"
               id="memory"
               name="memory"
               type="text"

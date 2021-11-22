@@ -1,21 +1,17 @@
 import React from "react";
 
-export default function ApiResult(props) {
+export default function ApiResult({ link, statusCode, result }) {
   return (
     <>
       <code>
         {window.location.protocol}
         {"//"}
         {window.location.host}
-        {props.link}
-        {props.statusCode && (
-          <span style={{ color: "yellow" }}>
-            &nbsp;HTTPStatus:{props.statusCode}
-          </span>
+        {link}
+        {statusCode && (
+          <span style={{ color: "yellow" }}>&nbsp;HTTPStatus:{statusCode}</span>
         )}
-        {props.result && (
-          <span style={{ color: "red" }}>&nbsp;{props.result}</span>
-        )}
+        {result && <span style={{ color: "red" }}>&nbsp;{result}</span>}
       </code>
     </>
   );

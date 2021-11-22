@@ -45,8 +45,6 @@ export default function HeavyLoad() {
     setLog(
       data.map((info) => {
         const v = parseInt((info.duration / max) * 100);
-        console.log(v);
-
         return (
           <div key={uuidv4()}>
             <code>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Col, Row, Label, Input } from "reactstrap";
-import ApiResult from "./ApiResult";
+import ApiResult from "../components/ApiResult";
 
 export default function Health() {
   const [temporaryStatus, setTemporaryStatus] = useState({
@@ -76,6 +76,7 @@ export default function Health() {
           <Label sm={4}>readyz=false duration (ms)</Label>
           <Col sm={8} className="mb-3">
             <Input
+              autoComplete="nope"
               id="memory"
               name="memory"
               type="text"
@@ -92,6 +93,7 @@ export default function Health() {
           <Label sm={4}>livez=false duration (ms)</Label>
           <Col sm={8} className="mb-3">
             <Input
+              autoComplete="nope"
               id="memory"
               name="memory"
               type="text"
