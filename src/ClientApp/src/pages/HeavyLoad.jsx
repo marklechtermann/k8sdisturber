@@ -105,6 +105,7 @@ export default function HeavyLoad() {
           processed sequentially by the backend. If you increase the number of
           replicates, then more requests from the client can be executed in
           parallel.
+          <p/>
           <Bash>
             kubectl scale --replicas 10 --namespace k8sdisturber
           </Bash>
