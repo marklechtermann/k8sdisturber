@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "reactstrap";
 import { IoRefreshCircleSharp } from "react-icons/io5";
-import { BiAlbum } from "react-icons/bi";
 
 export default function Home() {
   const [info, setInfo] = useState({

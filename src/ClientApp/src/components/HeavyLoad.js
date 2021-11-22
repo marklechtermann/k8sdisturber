@@ -8,6 +8,7 @@ import {
   Col,
   Label,
   Input,
+  Progress,
 } from "reactstrap";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -37,17 +38,29 @@ export default function HeavyLoad() {
 
     const requests = urls.map((url) => fetch(url));
     const responses = await Promise.all(requests);
-    const text = responses.map((response) => response.text());
-    let data = await Promise.all(text);
-    data = data.sort();
-    data.forEach((data, i) => {
-      setLog((p) => [
-        ...p,
-        <div style={{ color: "yellow" }} key={uuidv4()}>
-          Response {i + 1} received after {data}
-        </div>,
-      ]);
-    });
+    const json = responses.map((response) => response.json());
+    let data = await Promise.all(json);
+    data = data.sort((a, b) => a.duration - b.duration);
+    const max = data.at(-1).duration;
+    setLog(
+      data.map((info) => {
+        const v = parseInt((info.duration / max) * 100);
+        console.log(v);
+
+        return (
+          <div key={uuidv4()}>
+            <code>
+              Response received after{" "}
+              <span style={{ color: "yellow" }}>{info.duration}</span> from{" "}
+              <span style={{ color: "yellow" }}>{info.hostname}</span>{" "}
+              <span style={{ color: "yellow" }}>({info.instanceId})</span>
+            </code>
+            <Progress color="success" value={v} />
+          </div>
+        );
+        // ]);
+      })
+    );
     setRequestRunning(false);
   };
   return (
@@ -109,7 +122,7 @@ export default function HeavyLoad() {
               Do it!
               {requestRunning && (
                 <span
-                  class="spinner-border spinner-border-sm"
+                  className="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"
                   style={{ marginLeft: "1rem" }}

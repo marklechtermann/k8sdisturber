@@ -18,13 +18,9 @@ public class InfoController : ControllerBase
         this.infoService = infoService;
     }
 
-
     [HttpGet("")]
-    public ActionResult<Info> Info()
+    public ActionResult<ApplicationEnvironmentInfo> Info()
     {
-        return Ok(infoService.GetInfo());
+        return Ok(infoService.ApplicationEnvironmentInfo);
     }
-
-
-
 }

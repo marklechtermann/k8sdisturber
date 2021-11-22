@@ -1,6 +1,6 @@
 namespace k8sdisturber.Models;
 
-public class Info
+public class ApplicationEnvironmentInfo
 {
     public string? Hostname { get; set; }
     public string? Version { get; set; }

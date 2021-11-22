@@ -9,12 +9,26 @@ namespace k8sdisturber.Services
     {
         private static readonly string instanceGuid = "";
 
+        public ApplicationEnvironmentInfo? info;
+
         static InfoService()
         {
             instanceGuid = Guid.NewGuid().ToString();
         }
 
-        public Info GetInfo()
+        public ApplicationEnvironmentInfo ApplicationEnvironmentInfo
+        {
+            get
+            {
+                if (info == null)
+                {
+                    this.info = GetInfo();
+                }
+                return info;
+            }
+        }
+
+        private ApplicationEnvironmentInfo GetInfo()
         {
             var envs = Environment.GetEnvironmentVariables();
             Dictionary<string, string> environmentVariables = new Dictionary<string, string>();
@@ -33,7 +47,7 @@ namespace k8sdisturber.Services
             }
             environmentVariables = environmentVariables.OrderBy(kvp => kvp.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            return new Info()
+            return new ApplicationEnvironmentInfo()
             {
                 Hostname = Dns.GetHostName(),
                 IpAdresses = GetLocalIPAddress(),
@@ -48,7 +62,7 @@ namespace k8sdisturber.Services
             };
         }
 
-        public static IEnumerable<string> GetLocalIPAddress()
+        private static IEnumerable<string> GetLocalIPAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             return host.AddressList.Select(i => i.ToString());

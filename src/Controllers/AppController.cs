@@ -10,13 +10,14 @@ public class AppController : ControllerBase
 {
     private readonly ILogger<AppController> logger;
     private readonly AppService appService;
-
+    private readonly InfoService infoService;
     private static readonly object slowLock = new object();
 
-    public AppController(ILogger<AppController> logger, AppService appService)
+    public AppController(ILogger<AppController> logger, AppService appService, InfoService infoService)
     {
         this.logger = logger;
         this.appService = appService;
+        this.infoService = infoService;
     }
 
     [HttpDelete]
@@ -28,7 +29,7 @@ public class AppController : ControllerBase
     }
 
     [HttpGet("slow")]
-    public IActionResult Slow(int delay)
+    public ActionResult<SlowRequest> Slow(int delay)
     {
         var start = DateTime.Now;
         logger.LogInformation("Slow Request: Enter...");
@@ -39,7 +40,7 @@ public class AppController : ControllerBase
         }
         logger.LogInformation($"Slow Request: Finished");
         var duration = (DateTime.Now - start).TotalMilliseconds;
-        return Ok($"{Math.Max(0, duration)} ms");
+        return Ok(new SlowRequest() { Duration = duration, InstanceId = this.infoService.ApplicationEnvironmentInfo.InstanceId, Hostname = this.infoService.ApplicationEnvironmentInfo.Hostname });
     }
 
     [HttpGet("memory")]
