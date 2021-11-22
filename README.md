@@ -31,3 +31,15 @@ helm upgrade --install ingress-nginx ingress-nginx \
 kubectl create namespace k8sdisturber
 kubectl apply -f workloads.yaml
 ```
+
+## Foward postgres database port to local machine
+
+```bash
+kubectl port-forward pod/postgresql-0 -n k8sdisturber 5432:5432
+```
+
+Connect local
+
+```bash
+psql -h localhost -p 5432 -U postgres
+```

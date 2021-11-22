@@ -1,0 +1,169 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresql
+  namespace: k8sdisturber
+spec:
+  serviceName: postgresql
+  selector:
+    matchLabels:
+      app: postgresql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+        - name: postgresql
+          image: postgres:12
+          env:
+            - name: POSTGRES_PASSWORD
+              value: mypassword
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: custom-init-scripts
+      volumes:
+        - configMap:
+            name: postgresql-init-script
+          name: custom-init-scripts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-lb
+  namespace: k8sdisturber
+spec:
+  type: LoadBalancer
+  selector:
+    app: postgresql
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql
+  namespace: k8sdisturber
+spec:
+  selector:
+    app: postgresql
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/part-of: nscale
+    nscale.ceyoniq.com/version: "8"
+  name: postgresql-init-script
+  namespace: k8sdisturber
+data:
+  0_setup.sh: |-
+    #!/usr/bin/env bash
+    set -e
+
+    PGPASSWORD=mypassword psql -v ON_ERROR_STOP=1 --username postgres postgres <<-EOSQL
+      CREATE DATABASE k8sdisturber ENCODING 'UTF8';
+      GRANT ALL PRIVILEGES ON DATABASE k8sdisturber TO postgres;
+
+    EOSQL
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pgadmin
+  namespace: k8sdisturber
+spec:
+  serviceName: pgadmin
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: pgadmin
+          image: dpage/pgadmin4
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 5
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              value: admin@example.org
+            - name: PGADMIN_DEFAULT_PASSWORD
+              value: mypassword
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: pgadmin-config
+              mountPath: /pgadmin4/servers.json
+              subPath: servers.json
+              readOnly: true
+      volumes:
+        - name: pgadmin-config
+          configMap:
+            name: pgadmin-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin
+  namespace: k8sdisturber
+spec:
+  selector:
+    app: pgadmin
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: k8sdisturber
+  name: pgadmin-config
+data:
+  servers.json: |
+    {
+        "Servers": {
+          "1": {
+            "Name": "postgres",
+            "Group": "Servers",
+            "Port": 5432,
+            "Username": "postgres",
+            "Host": "postgresql",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres"
+          }
+        }
+    }
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8sdisturber
+  namespace: k8sdisturber
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: pgadmin.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pgadmin
+                port:
+                  number: 80

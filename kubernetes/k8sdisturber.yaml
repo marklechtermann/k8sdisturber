@@ -70,6 +70,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: k8sdisturber
+                name: pgadmin
                 port:
                   number: 80
