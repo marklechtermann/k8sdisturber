@@ -1,6 +1,6 @@
 # K8s Disturber :boom:
 
-![CI build](https://github.com/marklechtermann/k8sdisturber/actions/workflows/build.yaml/badge.svg)
+[![CI](https://github.com/marklechtermann/k8sdisturber/actions/workflows/ci.yaml/badge.svg)](https://github.com/marklechtermann/k8sdisturber/actions/workflows/ci.yaml)
 
 You know how it is, you want to explain Kubernetes to someone and you need an application to play with?  
 K8sDisturber is such an application.
