@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Memory from "./pages/Memory";
 import Health from "./pages/Health";
 import HeavyLoad from "./pages/HeavyLoad";
+import Database from "./pages/Database";
 
 import "./custom.css";
 
@@ -18,6 +19,7 @@ export default class App extends Component {
         <Route path="/memory" component={Memory} />
         <Route path="/health" component={Health} />
         <Route path="/heavy" component={HeavyLoad} />
+        <Route path="/database" component={Database} />
       </Layout>
     );
   }

@@ -60,14 +60,12 @@ export default function HeavyLoad() {
     const faktor = 100 / overallDuration;
 
     data = data.sort((a, b) => a.duration - b.duration);
-    const max = data.at(-1).duration;
     const p3 = overallDuration * faktor;
 
     setDurationAll(overallDuration);
 
     setLog(
       data.map((info) => {
-        const v = parseInt((info.duration / max) * 100);
         const duration = info.end - info.start;
 
         const p1 = (info.start - start) * faktor;

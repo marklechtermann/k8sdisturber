@@ -17,7 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<InfoService>();
 builder.Services.AddSingleton<AppService>();
-builder.Services.AddSingleton<K8sDisturberContext>();
+builder.Services.AddTransient<K8sDisturberContext>();
+builder.Services.AddTransient<UserRepositoryService>();
 
 builder.Services.Configure<AppOptions>(builder.Configuration);
 
@@ -48,15 +49,6 @@ appService.Initialize();
 
 var ctx = app.Services.GetService<K8sDisturberContext>();
 
-if (ctx != null)
-{
-    bool f = ctx.Database.CanConnect();
-    await ctx.Database.EnsureDeletedAsync();
-    await ctx.Database.EnsureCreatedAsync();
-
-    ctx.Persons?.Add(new() { Name = "FooBlog" });
-    await ctx.SaveChangesAsync();
-}
-
+ctx?.ResetDatabase();
 
 app.Run();

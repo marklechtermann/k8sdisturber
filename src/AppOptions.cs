@@ -7,6 +7,7 @@ public class AppOptions
     public string? DBHostname { get; set; }
     public string? DBUser { get; set; }
     public string? DBName { get; set; } = "k8sdisturber";
+    public int NumberOfUser { get; set; } = 100;
     public string? DBPassword { get; set; }
 
 }

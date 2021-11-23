@@ -1,4 +1,5 @@
-﻿using k8sdisturber.Models;
+﻿using k8sdisturber.DataAccess;
+using k8sdisturber.Models;
 using k8sdisturber.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +10,14 @@ namespace k8sdisturber.Controllers;
 public class AppController : ControllerBase
 {
     private readonly ILogger<AppController> logger;
+    private readonly UserRepositoryService userRepositoryService;
     private readonly AppService appService;
     private readonly InfoService infoService;
 
-    public AppController(ILogger<AppController> logger, AppService appService, InfoService infoService)
+    public AppController(ILogger<AppController> logger, UserRepositoryService userRepositoryService, AppService appService, InfoService infoService)
     {
         this.logger = logger;
+        this.userRepositoryService = userRepositoryService;
         this.appService = appService;
         this.infoService = infoService;
     }
@@ -54,6 +57,12 @@ public class AppController : ControllerBase
     public IActionResult LiveZ()
     {
         return this.appService.IsAlive ? Ok("ok") : StatusCode(503, "fail");
+    }
+
+    [HttpGet("dbreadyz")]
+    public IActionResult GetDatabaseStatus()
+    {
+        return this.userRepositoryService.DatabaseAvailable ? Ok("ok") : StatusCode(503, "database down");
     }
 
     [HttpGet("status")]

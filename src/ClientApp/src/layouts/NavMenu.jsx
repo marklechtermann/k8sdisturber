@@ -33,7 +33,7 @@ export class NavMenu extends Component {
     return (
       <header>
         <Navbar
-          className="navcustom navbar-expand-sm navbar-toggleable-sm  mb-3"
+          className="navcustom navbar-expand-md navbar-toggleable-sm  mb-3"
           dark
         >
           <Container>
@@ -61,6 +61,11 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-light" to="/heavy">
                     Heavy Load
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-light" to="/database">
+                    Database
                   </NavLink>
                 </NavItem>
                 <NavItem>
