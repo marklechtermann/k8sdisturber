@@ -1,7 +1,6 @@
 using k8sdisturber.Services;
 using k8sdisturber;
 using k8sdisturber.DataAccess;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +25,6 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -41,14 +39,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");
-
 var appService = app.Services.GetService<AppService>();
 if (appService == null) throw new InvalidOperationException();
 appService.Initialize();
 
 var ctx = app.Services.GetService<K8sDisturberContext>();
-
-ctx?.ResetDatabase();
+ctx?.EnsureInitializedAsync();
 
 app.Run();

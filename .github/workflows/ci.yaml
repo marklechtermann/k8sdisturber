@@ -2,9 +2,11 @@ name: CI
 
 on:
   push:
-    branches: [master]
-    paths-ignore:
-      - "**/README.md"
+    branches: 
+      - master
+    paths:
+      - "src/**"
+      - "Dockerfile"
   workflow_dispatch:
 
 jobs:

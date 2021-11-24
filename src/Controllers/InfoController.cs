@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace k8sdisturber.Controllers;
 
 [ApiController]
-[Route("/api/")]
+[Route("/api/info/")]
 public class InfoController : ControllerBase
 {
-
     private readonly ILogger<InfoController> _logger;
     private readonly InfoService infoService;
 
@@ -18,7 +17,7 @@ public class InfoController : ControllerBase
         this.infoService = infoService;
     }
 
-    [HttpGet("info")]
+    [HttpGet()]
     public ActionResult<ApplicationEnvironmentInfo> Info()
     {
         return Ok(infoService.ApplicationEnvironmentInfo);

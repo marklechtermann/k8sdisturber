@@ -5,9 +5,9 @@ using static Bogus.DataSets.Name;
 
 namespace k8sdisturber.DataAccess
 {
-
     public class K8sDisturberContext : DbContext
     {
+        private const int SEED = 353546;
         private readonly ILogger<K8sDisturberContext>? logger;
         private readonly AppOptions options;
 
@@ -27,21 +27,28 @@ namespace k8sdisturber.DataAccess
         {
             this.logger?.LogInformation($"Try Conntect datase to {options.DBHostname}");
             optionsBuilder.UseNpgsql($"Host={options.DBHostname};Username={options.DBUser};Password={options.DBPassword};Database={options.DBName}");
-            // this.Database.EnsureCreatedAsync().GetAwaiter().GetResult();
         }
 
-        public async void ResetDatabase()
+        public async void EnsureInitializedAsync()
         {
             if (!await this.Database.CanConnectAsync())
+            {
+                this.logger?.LogWarning($"Failed to connect to database {options.DBHostname}.");
+                return;
+            }
+
+            await this.Database.EnsureCreatedAsync();
+
+            // Check if Users table contains already some data
+            var numberOfEntries = this.Users?.Count();
+            if (numberOfEntries != null && numberOfEntries.Value > 0)
             {
                 return;
             }
 
-            await this.Database.EnsureDeletedAsync();
-            await this.Database.EnsureCreatedAsync();
+            Randomizer.Seed = new Random(SEED);
 
-            Randomizer.Seed = new Random(353546);
-
+            // Create some database entries
             var users = new List<User>();
             for (int i = 0; i < options.NumberOfUser; i++)
             {
@@ -59,15 +66,4 @@ namespace k8sdisturber.DataAccess
             await this.SaveChangesAsync();
         }
     }
-}
-
-public class User
-{
-    public int Id { get; set; }
-    public Gender Gender { get; set; }
-    public string? UserName { get; set; }
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public string? Avatar { get; set; }
-    public string? Email { get; set; }
 }
