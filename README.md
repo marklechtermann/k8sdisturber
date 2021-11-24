@@ -21,15 +21,18 @@ It includes the following functions:
 >
 > I warned you :see_no_evil: :hear_no_evil: :speak_no_evil: ;-)
 
+This example is aimed at Windows users who use Docker Desktop or the WSL (with a docker-ce and K3s installation).
+If you use a "real operating" system, then everything can look quite different...
+
 ## Start
 
 ### Ingress Controller
 
-> In this example `helm` is used to install the ingress controller
-> `https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
+> In this example `helm` is used to install the ingress controller  
+> `curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
 > Further information: <https://helm.sh/docs/intro/install/>
 
-You need an ingress controller if you want to play with the examples.
+You need an ingress controller if you want to play with this example.
 This example uses `Docker Desktop`. If you want to use a different Kubernetes/Docker installation, you may need to modify the Ingress rules.
 
 And this is how you can install an ingress controller:
@@ -44,7 +47,9 @@ If you use the **K3s** in the **WSL**, then you may not be able to reach <http:/
 In this case, you can install the ingress controller like this. That should help.
 
 ```bash
-helm install -n ingress ingress-nginx ingress-nginx/ingress-nginx --set controller.hostNetwork=true,controller.extraArgs.report-node-internal-ip-address=true,controller.service.type="",controller.kind=DaemonSet
+helm install -n ingress ingress-nginx ingress-nginx/ingress-nginx \
+  --set controller.hostNetwork=true, \
+  --controller.extraArgs.report-node-internal-ip-address=true,controller.service.type="",controller.kind=DaemonSet
 ```
 
 Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
@@ -58,7 +63,13 @@ kubectl apply -f k8sdisturber.yaml
 ```
 
 Now you a ready to rock :metal: :  
-<http://localhost>
+
+**<http://localhost>**
+
+If you use the WSL, you can also reach the K8sDisturber by the following name.  
+But first you have to change the `C:\Windows\System32\drivers\etc\hosts` so that the entry `wsl.local` and `pgadmin.wsl.local` points to the IP address of your WSL instance.
+
+**<http://wsl.local>**
 
 If you want to get access to a database you can use the follwing command:
 
@@ -68,6 +79,9 @@ kubectl apply -f database.yaml
 
 You can access the PGAdmin4 if yout want:  
 <http://pgadmin.localhost>
+
+Or in case or the WSL:  
+<http://pgadmin.wsl.local>
 
 ## Supported environment variables
 
@@ -97,7 +111,7 @@ Default: mypassword
 
 ## For Developer
 
-Here you can find information for developers
+Here you can find information for developers.
 
 ### Foward postgres database port to your local machine
 
@@ -107,7 +121,7 @@ If you run the postgresql database in Kubernetes, you can forward the ports to l
 kubectl port-forward pod/postgresql-0 -n k8sdisturber 5432:5432
 ```
 
-Connect local
+Connect to the database from your local machine with the psql client:
 
 ```bash
 psql -h localhost -p 5432 -U postgres
