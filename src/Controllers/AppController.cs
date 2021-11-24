@@ -30,21 +30,6 @@ public class AppController : ControllerBase
         return Ok();
     }
 
-
-
-    [HttpGet("memory")]
-    public ActionResult<MemoryAllocation> GetAllocatedMegaBytes()
-    {
-        return Ok(new MemoryAllocation() { AllocatedMegaBytes = this.appService.AllocatedMegaBytes });
-    }
-
-    [HttpPut("memory")]
-    public ActionResult<MemoryAllocation> PutAllocatedMegaBytes(MemoryAllocation memoryRequest)
-    {
-        this.appService.AllocatedMegaBytes = memoryRequest.AllocatedMegaBytes;
-        return Ok(new MemoryAllocation() { AllocatedMegaBytes = this.appService.AllocatedMegaBytes });
-    }
-
     [HttpGet("readyz")]
     [Produces("text/plain")]
     public IActionResult ReadyZ()
