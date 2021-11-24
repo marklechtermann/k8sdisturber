@@ -39,17 +39,20 @@ And this is how you can install an ingress controller:
 
 ```bash
 helm upgrade --install ingress-nginx ingress-nginx \
-  --repo https://kubernetes.github.io/ingress-nginx \
-  --namespace ingress-nginx --create-namespace
+  --namespace ingress-nginx \
+  --create-namespace \
+  --repo https://kubernetes.github.io/ingress-nginx 
 ```
 
 If you use the **K3s** in the **WSL**, then you may not be able to reach <http://localhost>.  
 In this case, you can install the ingress controller like this. That should help.
 
 ```bash
-helm install -n ingress ingress-nginx ingress-nginx/ingress-nginx \
-  --set controller.hostNetwork=true, \
-  --controller.extraArgs.report-node-internal-ip-address=true,controller.service.type="",controller.kind=DaemonSet
+helm upgrade --install ingress-nginx ingress-nginx \
+  --namespace ingress-nginx \
+  --create-namespace \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --set controller.hostNetwork=true,controller.extraArgs.report-node-internal-ip-address=true,controller.service.type="",controller.kind=DaemonSet
 ```
 
 Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
