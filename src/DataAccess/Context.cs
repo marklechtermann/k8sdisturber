@@ -25,16 +25,15 @@ namespace k8sdisturber.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            this.logger?.LogInformation($"Try Conntect datase to {options.DBHostname}");
             optionsBuilder.UseNpgsql($"Host={options.DBHostname};Username={options.DBUser};Password={options.DBPassword};Database={options.DBName}");
         }
 
-        public async void EnsureInitializedAsync()
+        public async Task<bool> EnsureInitializedAsync()
         {
             if (!await this.Database.CanConnectAsync())
             {
                 this.logger?.LogWarning($"Failed to connect to database {options.DBHostname}.");
-                return;
+                return false;
             }
 
             await this.Database.EnsureCreatedAsync();
@@ -43,8 +42,10 @@ namespace k8sdisturber.DataAccess
             var numberOfEntries = this.Users?.Count();
             if (numberOfEntries != null && numberOfEntries.Value > 0)
             {
-                return;
+                return true;
             }
+
+            this.logger?.LogWarning($"Initializing database...");
 
             Randomizer.Seed = new Random(SEED);
 
@@ -64,6 +65,7 @@ namespace k8sdisturber.DataAccess
             }
             this.Users?.AddRange(users);
             await this.SaveChangesAsync();
+            return true;
         }
     }
 }
