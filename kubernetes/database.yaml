@@ -167,3 +167,14 @@ spec:
                 name: pgadmin
                 port:
                   number: 80
+    - host: pgadmin.wsl.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pgadmin
+                port:
+                  number: 80
+
