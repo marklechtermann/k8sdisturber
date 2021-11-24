@@ -1,4 +1,4 @@
-# K8s Disturber :boom:
+# :boom: K8s Disturber
 
 [![CI](https://github.com/marklechtermann/k8sdisturber/actions/workflows/ci.yaml/badge.svg)](https://github.com/marklechtermann/k8sdisturber/actions/workflows/ci.yaml)
 
@@ -23,12 +23,16 @@ It includes the following functions:
 
 ## Start
 
-### IngressController
+### Ingress Controller
 
-You need an IngressController if you want to play with the examples.
+> In this example `helm` is used to install the ingress controller
+> `https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
+> Further information: <https://helm.sh/docs/intro/install/>
+
+You need an ingress controller if you want to play with the examples.
 This example uses `Docker Desktop`. If you want to use a different Kubernetes/Docker installation, you may need to modify the Ingress rules.
 
-And this is how you can install an IngressController:
+And this is how you can install an ingress controller:
 
 ```bash
 helm upgrade --install ingress-nginx ingress-nginx \
@@ -36,7 +40,14 @@ helm upgrade --install ingress-nginx ingress-nginx \
   --namespace ingress-nginx --create-namespace
 ```
 
-<https://kubernetes.github.io/ingress-nginx/deploy/>
+If you use the **K3s** in the **WSL**, then you may not be able to reach <http://localhost>.  
+In this case, you can install the ingress controller like this. That should help.
+
+```bash
+helm install -n ingress ingress-nginx ingress-nginx/ingress-nginx --set controller.hostNetwork=true,controller.extraArgs.report-node-internal-ip-address=true,controller.service.type="",controller.kind=DaemonSet
+```
+
+Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
 ### Deploy to Kubernetes
 
@@ -57,18 +68,6 @@ kubectl apply -f database.yaml
 
 You can access the PGAdmin4 if yout want:  
 <http://pgadmin.localhost>
-
-## Foward postgres database port to your local machine
-
-```bash
-kubectl port-forward pod/postgresql-0 -n k8sdisturber 5432:5432
-```
-
-Connect local
-
-```bash
-psql -h localhost -p 5432 -U postgres
-```
 
 ## Supported environment variables
 
@@ -95,3 +94,21 @@ Default: k8sdisturber
 **`DBPASSWORD`**  
 The postgresql database name password.  
 Default: mypassword
+
+## For Developer
+
+Here you can find information for developers
+
+### Foward postgres database port to your local machine
+
+If you run the postgresql database in Kubernetes, you can forward the ports to localhost.
+
+```bash
+kubectl port-forward pod/postgresql-0 -n k8sdisturber 5432:5432
+```
+
+Connect local
+
+```bash
+psql -h localhost -p 5432 -U postgres
+```
