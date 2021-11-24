@@ -18,13 +18,13 @@ public class MemoryController : ControllerBase
         this.appService = appService;
     }
 
-    [HttpGet("memory")]
+    [HttpGet()]
     public ActionResult<MemoryAllocation> GetAllocatedMegaBytes()
     {
         return Ok(new MemoryAllocation() { AllocatedMegaBytes = this.appService.AllocatedMegaBytes });
     }
 
-    [HttpPut("memory")]
+    [HttpPut()]
     public ActionResult<MemoryAllocation> PutAllocatedMegaBytes(MemoryAllocation memoryRequest)
     {
         this.appService.AllocatedMegaBytes = memoryRequest.AllocatedMegaBytes;
