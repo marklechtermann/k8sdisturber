@@ -39,6 +39,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
+app.MapFallbackToFile("index.html");
+
 var appService = app.Services.GetService<AppService>();
 if (appService == null) throw new InvalidOperationException();
 appService.Initialize();
