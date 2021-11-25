@@ -46,6 +46,12 @@ helm upgrade --install ingress-nginx ingress-nginx \
 
 Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
+### Dashboard (optional)
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
+```
+
 ### Deploy to Kubernetes
 
 ```bash
@@ -74,6 +80,16 @@ You can access the PGAdmin4 if yout want:
 
 Or in case or the WSL:  
 <http://pgadmin.wsl.local>
+
+## Kubernetes Dashboard
+
+You can install a Kubernetes dashbaord if you want:  
+
+```bash
+cd kubernetes
+kubectl apply -f dashboard.yaml
+./login.sh
+```
 
 ## Supported environment variables
 
