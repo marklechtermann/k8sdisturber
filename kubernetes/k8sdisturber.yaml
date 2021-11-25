@@ -20,7 +20,7 @@ spec:
           name: k8sdisturber
           ports:
             - containerPort: 80
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
               path: /api/livez
