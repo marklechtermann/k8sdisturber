@@ -77,7 +77,7 @@ Or in case or the WSL:
 
 ## Kubernetes Dashboard
 
-You can install a Kubernetes dashbaord if you want:  
+You can install a Kubernetes dashboard if you want:  
 
 ```bash
 cd kubernetes
