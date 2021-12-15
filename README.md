@@ -1,6 +1,7 @@
 # :boom: K8s Disturber
 
 [![CI](https://github.com/marklechtermann/k8sdisturber/actions/workflows/ci.yaml/badge.svg)](https://github.com/marklechtermann/k8sdisturber/actions/workflows/ci.yaml)
+[![CodeQL](https://github.com/marklechtermann/k8sdisturber/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/marklechtermann/k8sdisturber/actions/workflows/codeql-analysis.yml)
 
 You know how it is, you want to explain Kubernetes to someone and you need an application to play with?  
 K8sDisturber is such an application.
