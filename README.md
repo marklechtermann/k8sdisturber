@@ -22,12 +22,10 @@ It includes the following functions:
 >
 > I warned you :see_no_evil: :hear_no_evil: :speak_no_evil: ;-)
 
-This example is aimed at Windows users who use Docker Desktop or the WSL (with a docker-ce and K3s installation).
+This example is intended for Windows users who use Docker Desktop or the WSL.
 If you use a "real operating" system, then everything can look quite different...
 
-## Start
-
-### Deploy to Kubernetes
+## Deploy to Kubernetes
 
 ```bash
 kubectl create namespace k8sdisturber
@@ -38,7 +36,7 @@ kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:80
 Now you a ready to rock :metal: : 
 **<http://localhost:8080/>**
 
-### K8sDisturber with Ingress Controller
+## K8sDisturber with Ingress Controller
 
 > In this example `helm` is used to install the ingress controller  
 > `curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
@@ -116,7 +114,7 @@ Default: mypassword
 
 Here you can find information for developers.
 
-### Foward postgres database port to your local machine
+## Foward postgres database port to your local machine
 
 If you run the postgresql database in Kubernetes, you can forward the ports to localhost.
 
