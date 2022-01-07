@@ -27,7 +27,18 @@ If you use a "real operating" system, then everything can look quite different..
 
 ## Start
 
-### Ingress Controller
+### Deploy to Kubernetes
+
+```bash
+kubectl create namespace k8sdisturber
+kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/k8sdisturber.yaml
+kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:80
+```
+
+Now you a ready to rock :metal: : 
+**<http://localhost:8080/>**
+
+### K8sDisturber with Ingress Controller
 
 > In this example `helm` is used to install the ingress controller  
 > `curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
@@ -47,17 +58,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
 
 Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
-### Deploy to Kubernetes
-
-```bash
-cd kubernetes
-kubectl create namespace k8sdisturber
-kubectl apply -f k8sdisturber.yaml
-```
-
-Now you a ready to rock :metal: :  
-
-**<http://localhost>**
+**<http://localhost/>**
 
 If you use the WSL, you can also reach the K8sDisturber by the following name.  
 But first you have to change the `C:\Windows\System32\drivers\etc\hosts` so that the entry `wsl.local` and `pgadmin.wsl.local` points to the IP address of your WSL instance.
@@ -67,7 +68,7 @@ But first you have to change the `C:\Windows\System32\drivers\etc\hosts` so that
 If you want to get access to a database you can use the follwing command:
 
 ```bash
-kubectl apply -f database.yaml
+kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/database.yaml
 ```
 
 You can access the PGAdmin4 if yout want:  
@@ -81,9 +82,8 @@ Or in case or the WSL:
 You can install a Kubernetes dashboard if you want:  
 
 ```bash
-cd kubernetes
-kubectl apply -f dashboard.yaml
-./login.sh
+kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/dashboard.yaml
+curl -s https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/login.sh | sh
 ```
 
 ## Supported environment variables
