@@ -58,22 +58,12 @@ Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
 **<http://localhost/>**
 
-If you use the WSL, you can also reach the K8sDisturber by the following name.  
-But first you have to change the `C:\Windows\System32\drivers\etc\hosts` so that the entry `wsl.local` and `pgadmin.wsl.local` points to the IP address of your WSL instance.
-
-**<http://wsl.local>**
-
-If you want to get access to a database you can use the follwing command:
-
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/database.yaml
 ```
 
 You can access the PGAdmin4 if yout want:  
 <http://pgadmin.localhost>
-
-Or in case or the WSL:  
-<http://pgadmin.wsl.local>
 
 ## Kubernetes Dashboard
 
