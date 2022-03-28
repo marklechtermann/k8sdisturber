@@ -60,12 +60,18 @@ Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
 ## Database
 
+If you want, then you can also use a database. On the route <http://localhost/database> you can see how your backend communicates with a database.  
+For this, you need to load another Kubernetes manifest into your cluster.
+
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/database.yaml
 ```
 
 You can access the PGAdmin4 if yout want:  
 <http://pgadmin.localhost>
+
+User: admin@example.org  
+Pass: mypassword  
 
 ## Kubernetes Dashboard
 
