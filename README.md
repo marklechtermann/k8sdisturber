@@ -82,6 +82,41 @@ kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/
 curl -s https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/login.sh | sh
 ```
 
+## Kubernetes and WSL2
+An easy way to install K8s is the WSL2.  
+
+<https://docs.microsoft.com/en-us/windows/wsl/install>
+
+If you have Ubuntu installed, then you can very easily install Docker in minikube.  
+
+```bash
+sudo apt update
+sudo apt install docker
+```
+
+The WSL did not start Docker automatically.  
+
+```bash
+sudo service docker start
+```
+
+Check if Docker is running:  
+
+```bash
+docker run hello-world
+```
+
+Now you can install minikube:  
+
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+
+```bash 
+kubectl get pods -A
+```
+
 ## Supported environment variables
 
 **`READINESSDELAY`**  
