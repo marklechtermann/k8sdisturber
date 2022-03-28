@@ -22,9 +22,6 @@ It includes the following functions:
 >
 > I warned you :see_no_evil: :hear_no_evil: :speak_no_evil: ;-)
 
-This example is intended for Windows users who use Docker Desktop or the WSL.
-If you use a "real operating" system, then everything can look quite different...
-
 ## Deploy to Kubernetes
 
 ```bash
