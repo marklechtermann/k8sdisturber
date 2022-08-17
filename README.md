@@ -30,7 +30,7 @@ kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/
 kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:8080
 ```
 
-Now you a ready to rock :metal: : 
+Now you a ready to rock :metal: :  
 **<http://localhost:8080/>**
 
 ## K8sDisturber with Ingress Controller
