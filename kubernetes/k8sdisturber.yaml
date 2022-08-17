@@ -16,7 +16,7 @@ spec:
         app: k8sdisturber
     spec:
       containers:
-        - image: marklechtermann/k8sdisturber
+        - image: marklechtermann/k8sdisturber:20220817.2f667fb
           name: k8sdisturber
           # ports:
           #   - containerPort: 80
