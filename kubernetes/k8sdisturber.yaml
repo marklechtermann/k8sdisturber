@@ -18,8 +18,8 @@ spec:
       containers:
         - image: marklechtermann/k8sdisturber
           name: k8sdisturber
-          ports:
-            - containerPort: 80
+          # ports:
+          #   - containerPort: 80
           imagePullPolicy: IfNotPresent
           # livenessProbe:
           #   httpGet:
@@ -39,47 +39,47 @@ spec:
           #   limits:
           #     memory: "200Mi"
           #     cpu: "1"
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: k8sdisturber
-  name: k8sdisturber
-  namespace: k8sdisturber
-spec:
-  ports:
-    - port: 80
-      protocol: TCP
-      targetPort: 80
-  selector:
-    app: k8sdisturber
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: k8sdisturber
-  namespace: k8sdisturber
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: localhost
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: k8sdisturber
-                port:
-                  number: 80
-    - host: wsl.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: k8sdisturber
-                port:
-                  number: 80                  
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: k8sdisturber
+#   name: k8sdisturber
+#   namespace: k8sdisturber
+# spec:
+#   ports:
+#     - port: 80
+#       protocol: TCP
+#       targetPort: 80
+#   selector:
+#     app: k8sdisturber
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: k8sdisturber
+#   namespace: k8sdisturber
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - host: localhost
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: k8sdisturber
+#                 port:
+#                   number: 80
+#     - host: wsl.local
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: k8sdisturber
+#                 port:
+#                   number: 80                  
