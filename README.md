@@ -27,7 +27,7 @@ It includes the following functions:
 ```bash
 kubectl create namespace k8sdisturber
 kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/k8sdisturber.yaml
-kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:80
+kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:8080
 ```
 
 Now you a ready to rock :metal: : 

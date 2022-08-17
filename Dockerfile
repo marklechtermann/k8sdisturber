@@ -22,7 +22,7 @@ RUN apt update && \
 
 COPY --from=build /app .
 
-ENV ASPNETCORE_URLS=http://+:80
+ENV ASPNETCORE_URLS=http://+:8080
 ENV K8SVERSION=${K8SVERSION}
 
 USER 1000
