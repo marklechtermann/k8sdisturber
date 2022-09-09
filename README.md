@@ -53,7 +53,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
 
 Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
-**<http://localhost/>**
+**<http://disturber.127.0.0.1.nip.io/>**
 
 ## Database
 
