@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "ajv": "^6.9.1",
-    "browserslist": "^4.19.0",
+    "browserslist": "^4.21.4",
     "cross-env": "^7.0.3",
     "eslint": "^7.25.0",
     "eslint-config-react-app": "^6.0.0",
