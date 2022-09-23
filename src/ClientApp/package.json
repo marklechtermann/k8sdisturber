@@ -41,7 +41,7 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.31.8",
-    "nan": "^2.14.2",
+    "nan": "^2.16.0",
     "react-scripts": "^5.0.1",
     "typescript": "^4.5.4"
   },
