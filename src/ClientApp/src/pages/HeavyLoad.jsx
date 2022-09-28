@@ -1,15 +1,4 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  FormFeedback,
-  FormGroup,
-  Row,
-  Col,
-  Label,
-  Input,
-  Progress,
-} from "reactstrap";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Bash from "../components/Bash";
@@ -75,17 +64,17 @@ export default function HeavyLoad() {
           <div key={uuidv4()}>
             <code>
               Response from{" "}
-              <span style={{ color: "yellow" }}>({info.instanceId})</span>{" "}
-              <span style={{ color: "yellow" }}>{info.hostname}</span>{" "}
+              <span style={{ divor: "yellow" }}>({info.instanceId})</span>{" "}
+              <span style={{ divor: "yellow" }}>{info.hostname}</span>{" "}
             </code>
 
-            <Progress multi>
-              <Progress bar color="dark" value={p1} />
-              <Progress bar color="primary" value={p2 - p1}>
+            <div>
+              <div value={p1} />
+              <div bar divor="primary" value={p2 - p1}>
                 <div className="text-center">{duration} ms</div>
-              </Progress>
-              <Progress bar color="dark" value={p3 - p2} />
-            </Progress>
+              </div>
+              <div value={p3 - p2} />
+            </div>
           </div>
         );
       })
@@ -95,62 +84,53 @@ export default function HeavyLoad() {
   return (
     <>
       <h1>Heavy Load</h1>
-      <Form onSubmit={handleSubmit}>
-        <div className="mb-3">
+      <form onSubmit={handleSubmit}>
+        <div>
           Here you can simulate parallel request to the backend. The request is
           processed sequentially by the backend. If you increase the number of
           replicates, then more requests from the client can be executed in
           parallel.
-          <p/>
+          <p />
           <Bash>
-          kubectl scale --replicas 10 --namespace k8sdisturber deploy/k8sdisturber
+            kubectl scale --replicas 10 --namespace k8sdisturber
+            deploy/k8sdisturber
           </Bash>
         </div>
-        <FormGroup row>
-          <Label sm={4}>Number of prallel requests:</Label>
-          <Col sm={8} className="mb-3">
-            <Input
-              autoComplete="nope"
-              id="memory"
-              name="memory"
-              type="text"
-              valid={checkParallelRequest()}
-              invalid={!checkParallelRequest()}
-              value={parallelRequests}
-              onChange={(e) => setParallelRequests(e.target.value)}
-            />
-            <FormFeedback>
-              Only numerical values between 0 and 10 are supported
-            </FormFeedback>
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label sm={4}>Request delay (ms):</Label>
-          <Col sm={8} className="mb-3">
-            <Input
+        <label>Number of prallel requests:</label>
+        <div>
+          <input
+            autoComplete="nope"
+            id="memory"
+            name="memory"
+            type="text"
+            value={parallelRequests}
+            onChange={(e) => setParallelRequests(e.target.value)}
+          />
+          <div>Only numerical values between 0 and 10 are supported</div>
+        </div>
+        <div>
+          <label>Request delay (ms):</label>
+          <div>
+            <input
               autoComplete="nope"
               id="memory"
               name="memory"
               type="text"
               value={delay}
-              valid={checkDelay()}
-              invalid={!checkDelay()}
               onChange={(e) => setDelay(e.target.value)}
             />
-            <FormFeedback>
-              Only numerical values greater than 0 are supported
-            </FormFeedback>
-          </Col>
-        </FormGroup>
-        <Row className="mb-3">
-          <Col sm={4}></Col>
-          <Col sm={8}>
-            <Button
+            <div>Only numerical values greater than 0 are supported</div>
+          </div>
+        </div>
+        <div>
+          <div></div>
+          <div>
+            <button
               disabled={
                 requestRunning || !checkParallelRequest() || !checkDelay()
               }
               type="submit"
-              color="primary"
+              divor="primary"
             >
               Do it!
               {requestRunning && (
@@ -161,14 +141,14 @@ export default function HeavyLoad() {
                   style={{ marginLeft: "1rem" }}
                 ></span>
               )}
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+            </button>
+          </div>
+        </div>
+      </form>
       <h1>Response:</h1>
       <div>
         <code>
-          Duration <span style={{ color: "yellow" }}>{durationAll} ms</span>
+          Duration <span style={{ divor: "yellow" }}>{durationAll} ms</span>
         </code>
       </div>
       <div>{log}</div>

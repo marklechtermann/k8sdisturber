@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button } from "reactstrap";
 import { IoRefreshCircleSharp } from "react-icons/io5";
 
 export default function Home() {
@@ -13,15 +12,19 @@ export default function Home() {
 
   const fetchInfo = async () => {
     const response = await fetch("/api/info");
-    const data = await response.json();
-    setInfo(data);
+    try {
+      const data = await response.json();
+      setInfo(data);
+    } catch {
+      console.log("Failed to fetch data from /api/info");
+    }
   };
 
   return (
     <>
       <h1>
         Info
-        <Button
+        <button
           color="secondary"
           size="sm"
           style={{ marginLeft: "1rem", marginBottom: "1rem" }}
@@ -31,10 +34,10 @@ export default function Home() {
             size="2rem"
             style={{ paddingTop: "0", paddingBottom: "0rem" }}
           ></IoRefreshCircleSharp>
-        </Button>
+        </button>
         <span></span>
       </h1>
-      <Table dark borderless>
+      <table>
         <tbody>
           <tr>
             <td>Application Version</td>
@@ -77,10 +80,10 @@ export default function Home() {
             </td>
           </tr>
         </tbody>
-      </Table>
+      </table>
 
       <h1>Variables</h1>
-      <Table dark borderless>
+      <table>
         <thead>
           <tr>
             <th>Key</th>
@@ -95,7 +98,7 @@ export default function Home() {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </table>
     </>
   );
 }

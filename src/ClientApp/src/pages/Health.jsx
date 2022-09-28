@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Col, Row, Label, Input } from "reactstrap";
 import ApiResult from "../components/ApiResult";
 
 export default function Health() {
@@ -68,14 +67,12 @@ export default function Health() {
   return (
     <div>
       <h1>ReadyZ and LiveZ</h1>
-      <Form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          Here you can set the readyz and livez status temporary.
-        </div>
-        <FormGroup row>
-          <Label sm={4}>readyz=false duration (ms)</Label>
-          <Col sm={8} className="mb-3">
-            <Input
+      <form onSubmit={handleSubmit}>
+        <div>Here you can set the readyz and livez status temporary.</div>
+        <div>
+          <label>readyz=false duration (ms)</label>
+          <div>
+            <input
               autoComplete="nope"
               id="memory"
               name="memory"
@@ -87,12 +84,12 @@ export default function Health() {
                 setTemporaryStatus(a);
               }}
             />
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label sm={4}>livez=false duration (ms)</Label>
-          <Col sm={8} className="mb-3">
-            <Input
+          </div>
+        </div>
+        <div>
+          <label>livez=false duration (ms)</label>
+          <div>
+            <input
               autoComplete="nope"
               id="memory"
               name="memory"
@@ -104,32 +101,32 @@ export default function Health() {
                 setTemporaryStatus(a);
               }}
             />
-          </Col>
-        </FormGroup>
+          </div>
+        </div>
 
-        <Row className="mb-3">
-          <Col sm={4}></Col>
-          <Col sm={8}>
+        <div>
+          <div></div>
+          <div>
             {" "}
-            <Button type="submit" color="primary">
+            <button type="submit" divor="primary">
               Do it!
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+            </button>
+          </div>
+        </div>
+      </form>
 
       <h1>Danger Zone</h1>
-      <Form onSubmit={handleSubmitDanger}>
-        <Row className="mb-3">
-          <Col sm={4}></Col>
-          <Col sm={8}>
+      <form onSubmit={handleSubmitDanger}>
+        <div>
+          <div></div>
+          <div>
             {" "}
-            <Button type="submit" color="danger">
+            <button type="submit" divor="danger">
               Kill Application!
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+            </button>
+          </div>
+        </div>
+      </form>
 
       <h1>Api</h1>
       <div>
