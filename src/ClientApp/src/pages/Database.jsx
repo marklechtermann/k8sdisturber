@@ -38,7 +38,7 @@ export default function Database({history}) {
     return (
         <div>
             <h1>Database</h1>
-            <div style={dbstatus == 200 ? {} :  {color:"yellow"} }>Status: {dbstatus}</div>
+            <div style={dbstatus === 200 ? {} :  {color:"yellow"} }>Status: {dbstatus}</div>
             <Table striped dark>
             <thead>
                 <tr>
