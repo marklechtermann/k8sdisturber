@@ -7,7 +7,7 @@ type ApplicationEnvironmentInfo = {
   osVersion?: string;
   processorCount?: number;
   processId?: number;
-  environmentVariables?: any[];
+  environmentVariables?: { key: string; value: string }[];
   userName?: string;
   userId?: number;
   instanceId?: string;
@@ -39,10 +39,7 @@ const Home: React.FC = () => {
           style={{ marginLeft: "1rem", marginBottom: "1rem" }}
           onClick={() => fetchInfo()}
         >
-          {/* <IoRefreshCircleSharp
-            size="2rem"
-            style={{ paddingTop: "0", paddingBottom: "0rem" }}
-          ></IoRefreshCircleSharp> */}
+          Reload
         </button>
         <span></span>
       </h1>
@@ -83,9 +80,9 @@ const Home: React.FC = () => {
           <tr>
             <td>IP adresses</td>
             <td>
-              {/* {info.ipAdresses.map((ip) => (
-                <div key={ip}>{ip}</div>
-              ))} */}
+              {info &&
+                info.ipAdresses &&
+                info.ipAdresses.map((ip) => <div key={ip}>{ip}</div>)}
             </td>
           </tr>
         </tbody>
@@ -100,12 +97,14 @@ const Home: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {/* {Object.entries(info.environmentVariables).map((a) => (
-            <tr key={a[0]}>
-              <td>{a[0]}</td>
-              <td>{a[1]}</td>
-            </tr>
-          ))} */}
+          {info &&
+            info.environmentVariables &&
+            info.environmentVariables.map((item) => (
+              <tr key={item.key}>
+                <td>{item.key}</td>
+                <td>{item.value}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </>

@@ -31,7 +31,7 @@ namespace k8sdisturber.Services
         private ApplicationEnvironmentInfo GetInfo()
         {
             var envs = Environment.GetEnvironmentVariables();
-            Dictionary<string, string> environmentVariables = new Dictionary<string, string>();
+            List<KeyValuePair<string, string>> environmentVariables = new List<KeyValuePair<string, string>>();
 
             foreach (DictionaryEntry de in envs)
             {
@@ -41,11 +41,10 @@ namespace k8sdisturber.Services
                     var value = de.Value.ToString();
                     if (key != null && value != null)
                     {
-                        environmentVariables.Add(key, value);
+                        environmentVariables.Add(new KeyValuePair<string, string>(key, value));
                     }
                 }
             }
-            environmentVariables = environmentVariables.OrderBy(kvp => kvp.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
 
             return new ApplicationEnvironmentInfo()
             {
