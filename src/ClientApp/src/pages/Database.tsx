@@ -63,9 +63,7 @@ const Database: React.FC<Props> = ({}) => {
   return (
     <div>
       <h1>Database</h1>
-      <div style={dbstatus === 200 ? {} : { color: "yellow" }}>
-        Status: {dbstatus}
-      </div>
+      <div>Status: {dbstatus}</div>
       <table>
         <thead>
           <tr>

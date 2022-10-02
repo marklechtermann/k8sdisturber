@@ -1,4 +1,4 @@
-import NavMenu from "./NavMenu";
+import Sidebar from "./Sidebar";
 import styles from "./Layout.module.css";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 
 const Layout: React.FC<Props> = ({ children }) => (
   <div className={styles.container}>
-    <NavMenu></NavMenu>
+    <Sidebar></Sidebar>
     <div>{children}</div>
   </div>
 );

@@ -15,7 +15,9 @@ const ApiResult: React.FC<Props> = ({ link, statusCode, result }) => {
         {window.location.host}
         {link}
         {statusCode && (
-          <span style={{ color: "yellow" }}>&nbsp;HTTPStatus:{statusCode}</span>
+          <span style={{ color: "darkorchid" }}>
+            &nbsp;HTTPStatus:{statusCode}
+          </span>
         )}
         {result && <span style={{ color: "red" }}>&nbsp;{result}</span>}
       </code>

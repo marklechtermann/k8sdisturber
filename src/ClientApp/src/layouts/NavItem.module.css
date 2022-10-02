@@ -1,0 +1,40 @@
+.navitem {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-left: 2rem;
+  padding-bottom: 0.5rem;
+
+  color: var(--foreground-light);
+}
+
+.navitem:hover {
+  background-color: var(--background-light);
+  color: var(--foreground-dark);
+  border-radius: 0.5rem;
+}
+
+.navitem:hover > a {
+  background-color: transparent;
+  color: var(--foreground-dark);
+}
+
+.link:link {
+  text-decoration: none;
+  color: var(--foreground-light);
+}
+
+.link:visited {
+  text-decoration: none;
+  color: var(--foreground-light);
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.link:active {
+  text-decoration: none;
+  color: var(--foreground-light);
+}

@@ -1,15 +1,16 @@
 .container {
-    display: flex;
-    height: 100vh;
-  }
+  display: flex;
+  height: 100vh;
+  background-color: var(--background-light);
+}
 
 .container > *:nth-child(1) {
-    background-color: red;
-    min-width: 300px;
-    max-width: 300px;
+  background-color: var(--background-dark);
+  min-width: 300px;
+  max-width: 300px;
 }
 
 .container > *:nth-child(2) {
-  background-color: blue;
   width: 100%;
+  padding-left: 2rem;
 }

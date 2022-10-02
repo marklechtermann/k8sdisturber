@@ -1,0 +1,15 @@
+.logo {
+  margin-left: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  height: 3rem;
+}
+
+.topLabel {
+  border-bottom: 1px solid;
+  border-color: var(--foreground-light);
+}
+
+.sidebar {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
