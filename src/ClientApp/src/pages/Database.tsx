@@ -8,7 +8,7 @@ enum Gender {
   Others = 2,
 }
 
-type User = {
+interface User {
   id: number;
   gender: Gender;
   userName: string;
@@ -16,7 +16,7 @@ type User = {
   lastName: string;
   avatar: string;
   email: string;
-};
+}
 
 const Database: React.FC<Props> = ({}) => {
   const [users, setUsers] = useState<User[]>([]);

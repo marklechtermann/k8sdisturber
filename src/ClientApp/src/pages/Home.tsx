@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-type ApplicationEnvironmentInfo = {
+interface ApplicationEnvironmentInfo {
   hostname?: string;
   version?: string;
   ipAdresses?: string[];
@@ -11,7 +11,7 @@ type ApplicationEnvironmentInfo = {
   userName?: string;
   userId?: number;
   instanceId?: string;
-};
+}
 
 const Home: React.FC = () => {
   const [info, setInfo] = useState<ApplicationEnvironmentInfo>({});
