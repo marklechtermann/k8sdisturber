@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { IoRefreshCircleSharp } from "react-icons/io5";
 
 export default function Home() {
   const [info, setInfo] = useState({
@@ -30,10 +29,10 @@ export default function Home() {
           style={{ marginLeft: "1rem", marginBottom: "1rem" }}
           onClick={() => fetchInfo()}
         >
-          <IoRefreshCircleSharp
+          {/* <IoRefreshCircleSharp
             size="2rem"
             style={{ paddingTop: "0", paddingBottom: "0rem" }}
-          ></IoRefreshCircleSharp>
+          ></IoRefreshCircleSharp> */}
         </button>
         <span></span>
       </h1>
