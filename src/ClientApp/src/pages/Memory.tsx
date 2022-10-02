@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ApiResult from "../components/ApiResult";
 
-export default function Memory() {
+type Props = {};
+
+const Memory: React.FC<Props> = () => {
   const [memorysize, setMemorysize] = useState({ allocatedMegaBytes: 0 });
   const [newMemorySize, setNewMemorySize] = useState(0);
   useEffect(() => {
     fetchMemory();
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     setMemory();
   };
@@ -48,7 +50,7 @@ export default function Memory() {
             name="memory"
             type="text"
             value={newMemorySize}
-            onChange={(e) => setNewMemorySize(e.target.value)}
+            onChange={(e) => setNewMemorySize(parseInt(e.target.value))}
           />
         </div>
         <div>
@@ -67,4 +69,6 @@ export default function Memory() {
       </div>
     </div>
   );
-}
+};
+
+export default Memory;

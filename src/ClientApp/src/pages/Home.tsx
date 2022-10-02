@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
 
-export default function Home() {
-  const [info, setInfo] = useState({
-    ipAdresses: [],
-    environmentVariables: [],
-  });
+type ApplicationEnvironmentInfo = {
+  hostname?: string;
+  version?: string;
+  ipAdresses?: string[];
+  osVersion?: string;
+  processorCount?: number;
+  processId?: number;
+  environmentVariables?: any[];
+  userName?: string;
+  userId?: number;
+  instanceId?: string;
+};
+
+const Home: React.FC = () => {
+  const [info, setInfo] = useState<ApplicationEnvironmentInfo>({});
+
   useEffect(() => {
     fetchInfo();
   }, []);
@@ -25,7 +36,6 @@ export default function Home() {
         Info
         <button
           color="secondary"
-          size="sm"
           style={{ marginLeft: "1rem", marginBottom: "1rem" }}
           onClick={() => fetchInfo()}
         >
@@ -73,9 +83,9 @@ export default function Home() {
           <tr>
             <td>IP adresses</td>
             <td>
-              {info.ipAdresses.map((ip) => (
+              {/* {info.ipAdresses.map((ip) => (
                 <div key={ip}>{ip}</div>
-              ))}
+              ))} */}
             </td>
           </tr>
         </tbody>
@@ -90,14 +100,16 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          {Object.entries(info.environmentVariables).map((a) => (
+          {/* {Object.entries(info.environmentVariables).map((a) => (
             <tr key={a[0]}>
               <td>{a[0]}</td>
               <td>{a[1]}</td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
     </>
   );
-}
+};
+
+export default Home;

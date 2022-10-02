@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function ApiResult({ link, statusCode, result }) {
+type Props = {
+  link: string;
+  statusCode?: number;
+  result?: string;
+};
+
+const ApiResult: React.FC<Props> = ({ link, statusCode, result }) => {
   return (
     <>
       <code>
@@ -15,4 +21,6 @@ export default function ApiResult({ link, statusCode, result }) {
       </code>
     </>
   );
-}
+};
+
+export default ApiResult;

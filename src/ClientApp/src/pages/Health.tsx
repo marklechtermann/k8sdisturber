@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ApiResult from "../components/ApiResult";
 
-export default function Health() {
+const Health: React.FC = () => {
   const [temporaryStatus, setTemporaryStatus] = useState({
     isAlive: false,
     isReady: false,
@@ -22,12 +22,12 @@ export default function Health() {
     };
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     postTemporaryStatus();
   };
 
-  const handleSubmitDanger = (event) => {
+  const handleSubmitDanger = (event: any) => {
     event.preventDefault();
     deleteApplication();
   };
@@ -80,7 +80,7 @@ export default function Health() {
               value={temporaryStatus.millisecondsIsReadyDuration}
               onChange={(e) => {
                 let a = { ...temporaryStatus };
-                a.millisecondsIsReadyDuration = e.target.value;
+                a.millisecondsIsReadyDuration = parseInt(e.target.value);
                 setTemporaryStatus(a);
               }}
             />
@@ -97,7 +97,7 @@ export default function Health() {
               value={temporaryStatus.millisecondsIsAliveDuration}
               onChange={(e) => {
                 let a = { ...temporaryStatus };
-                a.millisecondsIsAliveDuration = e.target.value;
+                a.millisecondsIsAliveDuration = parseInt(e.target.value);
                 setTemporaryStatus(a);
               }}
             />
@@ -108,9 +108,7 @@ export default function Health() {
           <div></div>
           <div>
             {" "}
-            <button type="submit" divor="primary">
-              Do it!
-            </button>
+            <button type="submit">Do it!</button>
           </div>
         </div>
       </form>
@@ -121,9 +119,7 @@ export default function Health() {
           <div></div>
           <div>
             {" "}
-            <button type="submit" divor="danger">
-              Kill Application!
-            </button>
+            <button type="submit">Kill Application!</button>
           </div>
         </div>
       </form>
@@ -136,4 +132,6 @@ export default function Health() {
       </div>
     </div>
   );
-}
+};
+
+export default Health;

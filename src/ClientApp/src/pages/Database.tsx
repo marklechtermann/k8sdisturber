@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from "react";
 
-export default function Database({ history }) {
-  const [users, setUsers] = useState([]);
-  const [dbstatus, setDbstatus] = useState("");
+type Props = {};
+
+enum Gender {
+  Male = 0,
+  Female = 1,
+  Others = 2,
+}
+
+type User = {
+  id: number;
+  gender: Gender;
+  userName: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  email: string;
+};
+
+const Database: React.FC<Props> = ({}) => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [dbstatus, setDbstatus] = useState<number>(0);
   useEffect(() => {
     fetchUsers();
     fetchdbstatus();
@@ -26,7 +44,7 @@ export default function Database({ history }) {
   const fetchUsers = async () => {
     try {
       const response = await fetch("/api/users?skip=0&take=200");
-      const data = await response.json();
+      const data = (await response.json()) as User[];
       setUsers(data);
     } catch {
       console.log("Failed to fetch data from /api/user");
@@ -72,4 +90,6 @@ export default function Database({ history }) {
       </table>
     </div>
   );
-}
+};
+
+export default Database;
