@@ -25,7 +25,7 @@ const Sidebar: React.FC<Props> = ({}) => {
         <NavItem link="health" text="Health" />
         <NavItem link="heavy" text="Heavy" />
         <NavItem link="database" text="Database" />
-        <NavItem link="swagger" text="Swagger" />
+        <NavItem link="swagger" text="Swagger" external />
       </div>
     </div>
   );

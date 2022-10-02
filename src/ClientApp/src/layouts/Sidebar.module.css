@@ -6,8 +6,9 @@
 }
 
 .topLabel {
-  border-bottom: 1px solid;
+  /* border-bottom: 1px solid; */
   border-color: var(--foreground-light);
+  margin-bottom: 1rem;
 }
 
 .sidebar {
