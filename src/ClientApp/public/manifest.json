@@ -1,15 +1,22 @@
 {
-  "short_name": "k8sdisturber",
-  "name": "k8sdisturber",
+  "short_name": "K8sDisturber",
+  "name": "K8sDisturber",
+  "description": "",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/images/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
     }
   ],
-  "start_url": "./index.html",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "start_url": "/",
+  "background_color": "#326ce5",
+  "display": "browser",
+  "scope": "/",
+  "theme_color": "#326ce5"
 }
