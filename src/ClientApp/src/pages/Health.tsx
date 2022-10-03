@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ApiResult from "../components/ApiResult";
+import HealthService from "../services/HealthService";
 
 const Health: React.FC = () => {
   const [temporaryStatus, setTemporaryStatus] = useState({
@@ -16,6 +17,8 @@ const Health: React.FC = () => {
     fetchStatus();
     const interval = setInterval(() => {
       fetchStatus();
+
+      HealthService.getReadyZ().then((e) => console.log(e));
     }, 2000);
     return () => {
       clearInterval(interval);
