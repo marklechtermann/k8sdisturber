@@ -19,7 +19,7 @@ spec:
           image: postgres:12
           env:
             - name: POSTGRES_PASSWORD
-              value: mypassword
+              value: password
           volumeMounts:
             - mountPath: /docker-entrypoint-initdb.d/
               name: custom-init-scripts
@@ -66,7 +66,7 @@ data:
     #!/usr/bin/env bash
     set -e
 
-    PGPASSWORD=mypassword psql -v ON_ERROR_STOP=1 --username postgres postgres <<-EOSQL
+    PGPASSWORD=password psql -v ON_ERROR_STOP=1 --username postgres postgres <<-EOSQL
       CREATE DATABASE k8sdisturber ENCODING 'UTF8';
       GRANT ALL PRIVILEGES ON DATABASE k8sdisturber TO postgres;
 
@@ -101,7 +101,7 @@ spec:
             - name: PGADMIN_DEFAULT_EMAIL
               value: admin@example.org
             - name: PGADMIN_DEFAULT_PASSWORD
-              value: mypassword
+              value: password
           ports:
             - name: http
               containerPort: 80
