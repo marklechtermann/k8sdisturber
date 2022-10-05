@@ -16,13 +16,13 @@ spec:
         app: k8sdisturber
     spec:
       containers:
-        - image: marklechtermann/k8sdisturber:20220817.2f667fb
+        - image: marklechtermann/k8sdisturber
           name: k8sdisturber
           ports:
             - containerPort: 8080
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
-            - name: ASPNETCORE_URLS 
+            - name: ASPNETCORE_URLS
               value: http://+:8080
           livenessProbe:
             httpGet:
