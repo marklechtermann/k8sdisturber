@@ -1,3 +1,13 @@
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import React, { useState, useEffect } from "react";
 import Title from "../components/Title";
@@ -34,71 +44,76 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Title>Recent Orders</Title>
-      <table>
-        <tbody>
-          <tr>
-            <td>Application Version</td>
-            <td>{info.version}</td>
-          </tr>
-          <tr>
-            <td>Instance ID</td>
-            <td>{info.instanceId}</td>
-          </tr>
-          <tr>
-            <td>Hostname</td>
-            <td>{info.hostname}</td>
-          </tr>
-          <tr>
-            <td>Username</td>
-            <td>{info.userName}</td>
-          </tr>
-          <tr>
-            <td>User ID</td>
-            <td>{info.userId}</td>
-          </tr>
-          <tr>
-            <td>OS version</td>
-            <td>{info.osVersion}</td>
-          </tr>
-          <tr>
-            <td>Processor count</td>
-            <td>{info.processorCount}</td>
-          </tr>
-          <tr>
-            <td>Process ID</td>
-            <td>{info.processId}</td>
-          </tr>
-          <tr>
-            <td>IP adresses</td>
-            <td>
-              {info &&
-                info.ipAdresses &&
-                info.ipAdresses.map((ip) => <div key={ip}>{ip}</div>)}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <Box component="div" sx={{ m: 4 }}>
+        <Title>Home</Title>
+        <TableContainer component={Paper}>
+          <Table size="small" aria-label="customized table">
+            <TableBody>
+              <TableRow>
+                <TableCell>Application Version</TableCell>
+                <TableCell>{info.version}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Instance ID</TableCell>
+                <TableCell>{info.instanceId}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Hostname</TableCell>
+                <TableCell>{info.hostname}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Username</TableCell>
+                <TableCell>{info.userName}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>User ID</TableCell>
+                <TableCell>{info.userId}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>OS version</TableCell>
+                <TableCell>{info.osVersion}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Processor count</TableCell>
+                <TableCell>{info.processorCount}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Process ID</TableCell>
+                <TableCell>{info.processId}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>IP adresses</TableCell>
+                <TableCell>
+                  {info &&
+                    info.ipAdresses &&
+                    info.ipAdresses.map((ip) => <div key={ip}>{ip}</div>)}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
 
-      <h1>Variables</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {info &&
-            info.environmentVariables &&
-            info.environmentVariables.map((item) => (
-              <tr key={item.key}>
-                <td>{item.key}</td>
-                <td>{item.value}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <Box component="div" sx={{ m: 4 }}>
+        <Title>Variables</Title>
+        <TableContainer component={Paper}>
+          <Table size="small" aria-label="customized table">
+            <TableBody>
+              {info &&
+                info.environmentVariables &&
+                info.environmentVariables.map((item) => (
+                  <TableRow
+                    key={item.key}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>{item.key}</TableCell>
+                    <TableCell>{item.value}</TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
     </>
   );
 };

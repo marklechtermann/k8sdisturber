@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Title from "../components/Title";
 
 type Props = {};
 
@@ -62,7 +63,7 @@ const Database: React.FC<Props> = ({}) => {
 
   return (
     <div>
-      <h1>Database</h1>
+      <Title>Database</Title>
       <div>Status: {dbstatus}</div>
       <table>
         <thead>
