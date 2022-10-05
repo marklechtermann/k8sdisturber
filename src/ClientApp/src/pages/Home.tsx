@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import React, { useState, useEffect } from "react";
+import Title from "../components/Title";
 
 interface ApplicationEnvironmentInfo {
   hostname?: string;
@@ -33,19 +34,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Button variant="contained">Hello World</Button>
-
-      <h1>
-        Info
-        <button
-          color="secondary"
-          style={{ marginLeft: "1rem", marginBottom: "1rem" }}
-          onClick={() => fetchInfo()}
-        >
-          Reload
-        </button>
-        <span></span>
-      </h1>
+      <Title>Recent Orders</Title>
       <table>
         <tbody>
           <tr>

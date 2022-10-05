@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -15,14 +14,27 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  PaletteMode,
+} from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Footer } from "./Footer";
 import { Link } from "react-router-dom";
 
 import GitHubIcon from "@mui/icons-material/GitHub";
-import MenuIcon from "@mui/icons-material/Menu";
+import LightModeIcon from "@mui/icons-material/LightMode";
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
+import MemoryIcon from "@mui/icons-material/Memory";
+import DatasetIcon from "@mui/icons-material/Dataset";
+import TrafficIcon from "@mui/icons-material/Traffic";
+import { useState } from "react";
 
 const drawerWidth: number = 240;
 
@@ -74,20 +86,25 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const darkTheme = createTheme({
-  // palette: {
-  //   mode: "dark",
-  // },
-});
-
 interface Props {
   children?: JSX.Element | JSX.Element[];
 }
 
-const Dashboard: React.FC<Props> = ({ children }) => {
-  const [open, setOpen] = React.useState(true);
+const LayoutContainer: React.FC<Props> = ({ children }) => {
+  const [open, setOpen] = useState(true);
+  const [themeColor, setThemeColor] = useState<PaletteMode>("light");
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: themeColor,
+    },
+  });
+
+  const toggleThemeColor = () => {
+    setThemeColor(themeColor === "light" ? "dark" : "light");
   };
 
   return (
@@ -119,8 +136,13 @@ const Dashboard: React.FC<Props> = ({ children }) => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              K8sDisturber {themeColor}
             </Typography>
+
+            <IconButton color="inherit" onClick={toggleThemeColor}>
+              <LightModeIcon />
+            </IconButton>
+
             <IconButton
               color="inherit"
               href="https://github.com/marklechtermann/k8sdisturber"
@@ -146,31 +168,31 @@ const Dashboard: React.FC<Props> = ({ children }) => {
           <List component="nav">
             <ListItemButton component={Link} to="/home">
               <ListItemIcon>
-                <DashboardIcon />
+                <HomeIcon />
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
             <ListItemButton component={Link} to="/health">
               <ListItemIcon>
-                <DashboardIcon />
+                <HeartBrokenIcon />
               </ListItemIcon>
               <ListItemText primary="Health" />
             </ListItemButton>
             <ListItemButton component={Link} to="/heavyload">
               <ListItemIcon>
-                <DashboardIcon />
+                <TrafficIcon />
               </ListItemIcon>
               <ListItemText primary="HeavyLoad" />
             </ListItemButton>
             <ListItemButton component={Link} to="/memory">
               <ListItemIcon>
-                <DashboardIcon />
+                <MemoryIcon />
               </ListItemIcon>
               <ListItemText primary="Memory" />
             </ListItemButton>
             <ListItemButton component={Link} to="/database">
               <ListItemIcon>
-                <DashboardIcon />
+                <DatasetIcon />
               </ListItemIcon>
               <ListItemText primary="Database" />
             </ListItemButton>
@@ -199,4 +221,4 @@ const Dashboard: React.FC<Props> = ({ children }) => {
   );
 };
 
-export default Dashboard;
+export default LayoutContainer;

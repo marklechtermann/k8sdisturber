@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./layouts/Layout";
+import Layout from "./layouts/LayoutContainer";
 import Home from "./pages/Home";
 import Memory from "./pages/Memory";
 import Health from "./pages/Health";
 import HeavyLoad from "./pages/HeavyLoad";
 import Database from "./pages/Database";
-import Dashboard from "./layouts/Dashboard";
+import LayoutContainer from "./layouts/LayoutContainer";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       {" "}
       <BrowserRouter>
-        <Dashboard>
+        <LayoutContainer>
           <Routes>
             <Route path="/" element={<Home></Home>} />
             <Route path="/home" element={<Home></Home>} />
@@ -25,7 +25,7 @@ function App() {
             <Route path="/heavy" element={<HeavyLoad />} />
             <Route path="/database" element={<Database />} />
           </Routes>
-        </Dashboard>
+        </LayoutContainer>
       </BrowserRouter>
     </div>
   );

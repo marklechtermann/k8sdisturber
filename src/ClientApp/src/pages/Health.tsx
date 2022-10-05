@@ -1,5 +1,7 @@
+import { Box, Button, TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import ApiResult from "../components/ApiResult";
+import Title from "../components/Title";
 import HealthService from "../services/HealthService";
 
 const Health: React.FC = () => {
@@ -30,8 +32,7 @@ const Health: React.FC = () => {
     postTemporaryStatus();
   };
 
-  const handleSubmitDanger = (event: any) => {
-    event.preventDefault();
+  const handleDangerKlicked = (event: any) => {
     deleteApplication();
   };
 
@@ -69,65 +70,52 @@ const Health: React.FC = () => {
 
   return (
     <div>
-      <h1>ReadyZ and LiveZ</h1>
+      <Title>ReadyZ and LiveZ</Title>
       <form onSubmit={handleSubmit}>
         <div>Here you can set the readyz and livez status temporary.</div>
-        <div>
-          <label>readyz=false duration (ms)</label>
-          <div>
-            <input
-              autoComplete="nope"
-              id="memory"
-              name="memory"
-              type="text"
-              value={temporaryStatus.millisecondsIsReadyDuration}
-              onChange={(e) => {
-                let a = { ...temporaryStatus };
-                a.millisecondsIsReadyDuration = parseInt(e.target.value);
-                setTemporaryStatus(a);
-              }}
-            />
-          </div>
-        </div>
-        <div>
-          <label>livez=false duration (ms)</label>
-          <div>
-            <input
-              autoComplete="nope"
-              id="memory"
-              name="memory"
-              type="text"
-              value={temporaryStatus.millisecondsIsAliveDuration}
-              onChange={(e) => {
-                let a = { ...temporaryStatus };
-                a.millisecondsIsAliveDuration = parseInt(e.target.value);
-                setTemporaryStatus(a);
-              }}
-            />
-          </div>
-        </div>
 
-        <div>
-          <div></div>
-          <div>
-            {" "}
-            <button type="submit">Do it!</button>
-          </div>
-        </div>
+        <Box component="div" sx={{ m: 4 }}>
+          <TextField
+            id="outlined-required"
+            label="readyz=false duration (ms)"
+            defaultValue="Hello World"
+            value={temporaryStatus.millisecondsIsReadyDuration}
+            onChange={(e) => {
+              let a = { ...temporaryStatus };
+              a.millisecondsIsReadyDuration = parseInt(e.target.value);
+              setTemporaryStatus(a);
+            }}
+          />
+        </Box>
+
+        <Box component="div" sx={{ m: 4 }}>
+          <TextField
+            id="outlined-required"
+            label="livez=false duration (ms)"
+            defaultValue="Hello World"
+            value={temporaryStatus.millisecondsIsAliveDuration}
+            onChange={(e) => {
+              let a = { ...temporaryStatus };
+              a.millisecondsIsAliveDuration = parseInt(e.target.value);
+              setTemporaryStatus(a);
+            }}
+          />
+        </Box>
+        <Box component="div" sx={{ m: 4 }}>
+          <Button type="submit" variant="contained">
+            Do It
+          </Button>
+        </Box>
       </form>
 
-      <h1>Danger Zone</h1>
-      <form onSubmit={handleSubmitDanger}>
-        <div>
-          <div></div>
-          <div>
-            {" "}
-            <button type="submit">Kill Application!</button>
-          </div>
-        </div>
-      </form>
+      <Title color="red">Danger Zone</Title>
+      <Box component="div" sx={{ m: 4 }}>
+        <Button variant="contained" onClick={handleDangerKlicked}>
+          Kill Application!
+        </Button>
+      </Box>
 
-      <h1>Api</h1>
+      <Title>API</Title>
       <div>
         <ApiResult link="/api/readyz" statusCode={readyzStatus}></ApiResult>
         <br />
