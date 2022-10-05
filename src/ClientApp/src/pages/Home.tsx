@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import React, { useState, useEffect } from "react";
 
 interface ApplicationEnvironmentInfo {
@@ -32,6 +33,8 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <Button variant="contained">Hello World</Button>
+
       <h1>
         Info
         <button

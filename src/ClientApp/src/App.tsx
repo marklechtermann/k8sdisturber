@@ -7,6 +7,7 @@ import Memory from "./pages/Memory";
 import Health from "./pages/Health";
 import HeavyLoad from "./pages/HeavyLoad";
 import Database from "./pages/Database";
+import Dashboard from "./layouts/Dashboard";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -15,7 +16,7 @@ function App() {
     <div className="App">
       {" "}
       <BrowserRouter>
-        <Layout>
+        <Dashboard>
           <Routes>
             <Route path="/" element={<Home></Home>} />
             <Route path="/home" element={<Home></Home>} />
@@ -24,7 +25,7 @@ function App() {
             <Route path="/heavy" element={<HeavyLoad />} />
             <Route path="/database" element={<Database />} />
           </Routes>
-        </Layout>
+        </Dashboard>
       </BrowserRouter>
     </div>
   );
