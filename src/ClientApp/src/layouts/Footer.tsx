@@ -1,19 +1,9 @@
-import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 
-// import { mainListItems, secondaryListItems } from "./listItems";
-// import Chart from "./Chart";
-// import Deposits from "./Deposits";
-// import Orders from "./Orders";
 export function Footer(props: any) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      sx={{ pt: 6 }}
-    >
+    <Typography variant="body2" color="text.secondary" align="center">
       {"GitHub: "}
       <Link
         color="inherit"

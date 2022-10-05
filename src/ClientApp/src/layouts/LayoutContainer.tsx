@@ -8,21 +8,14 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
-  Icon,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   PaletteMode,
-  SvgIcon,
 } from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Footer } from "./Footer";
 import { Link } from "react-router-dom";
 
@@ -39,7 +32,6 @@ import MemoryIcon from "@mui/icons-material/Memory";
 import DatasetIcon from "@mui/icons-material/Dataset";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import { useState } from "react";
-import { padding } from "@mui/system";
 
 const drawerWidth: number = 240;
 

@@ -22,7 +22,7 @@ function App() {
             <Route path="/home" element={<Home></Home>} />
             <Route path="/memory" element={<Memory />} />
             <Route path="/health" element={<Health />} />
-            <Route path="/heavy" element={<HeavyLoad />} />
+            <Route path="/heavyload" element={<HeavyLoad />} />
             <Route path="/database" element={<Database />} />
           </Routes>
         </LayoutContainer>

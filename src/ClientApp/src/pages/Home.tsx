@@ -44,7 +44,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Box component="div" sx={{ m: 4 }}>
+      <Box component="div">
         <Title>Home</Title>
         <TableContainer component={Paper}>
           <Table size="small" aria-label="customized table">
