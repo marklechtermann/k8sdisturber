@@ -33,7 +33,7 @@ const Health: React.FC = () => {
   };
 
   const handleDangerKlicked = (event: any) => {
-    deleteApplication();
+    killApplication();
   };
 
   const postTemporaryStatus = async () => {
@@ -48,7 +48,7 @@ const Health: React.FC = () => {
     setTemporaryStatus(data);
   };
 
-  const deleteApplication = async () => {
+  const killApplication = async () => {
     const response = await fetch("/api", {
       method: "DELETE",
     });

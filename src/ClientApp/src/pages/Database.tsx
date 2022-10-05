@@ -1,3 +1,13 @@
+import {
+  TableContainer,
+  Paper,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableHead,
+  Box,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
 
@@ -62,32 +72,36 @@ const Database: React.FC<Props> = ({}) => {
   };
 
   return (
-    <div>
-      <Title>Database</Title>
-      <div>Status: {dbstatus}</div>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>UserName</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((u) => (
-            <tr key={u.id}>
-              <th scope="row">{u.id}</th>
-              <td>{u.userName}</td>
-              <td>{u.firstName}</td>
-              <td>{u.lastName}</td>
-              <td>{u.email}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <Box paddingBottom="1rem">
+        <Title>Database</Title>
+        <div>Status: {dbstatus}</div>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table size="small" aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <TableCell>#</TableCell>
+              <TableCell>UserName</TableCell>
+              <TableCell>FirstName</TableCell>
+              <TableCell>LastName</TableCell>
+              <TableCell>Email</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((u) => (
+              <TableRow key={u.id}>
+                <TableCell scope="row">{u.id}</TableCell>
+                <TableCell>{u.userName}</TableCell>
+                <TableCell>{u.firstName}</TableCell>
+                <TableCell>{u.lastName}</TableCell>
+                <TableCell>{u.email}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 
