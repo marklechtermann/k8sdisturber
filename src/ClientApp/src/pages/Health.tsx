@@ -1,5 +1,5 @@
 import { Alert, Box, Button, TextField } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ApiResult from "../components/ApiResult";
 import Title from "../components/Title";
 import HealthService from "../services/HealthService";

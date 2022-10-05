@@ -1,7 +1,7 @@
-import { Box, Button, CircularProgress, Slider } from "@mui/material";
-import React from "react";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { Box, Button, CircularProgress, Slider } from "@mui/material";
+import { uuid } from "uuidv4";
+
 import Bash from "../components/Bash";
 import Title from "../components/Title";
 
@@ -16,7 +16,7 @@ const HeavyLoad: React.FC = () => {
     parallelRequests >= 1 && parallelRequests <= 20;
   const checkDelay = () => delay >= 0;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     setLog([]);
     e.preventDefault();
     calculate();
@@ -26,7 +26,7 @@ const HeavyLoad: React.FC = () => {
     setRequestRunning(true);
     let urls = [];
     for (let i = 1; i <= parallelRequests; i++) {
-      urls.push(`/api/slow?delay=${delay}&uid=${uuidv4()}`);
+      urls.push(`/api/slow?delay=${delay}&uid=${uuid()}`);
     }
 
     const requests = urls.map((url) => fetch(url));

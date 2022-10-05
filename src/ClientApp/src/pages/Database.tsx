@@ -8,7 +8,7 @@ import {
   TableHead,
   Box,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import User from "../api/models/User";
 import UserService from "../api/UserService";
 import Title from "../components/Title";
