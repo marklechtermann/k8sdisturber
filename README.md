@@ -68,7 +68,7 @@ You can access the PGAdmin4 if yout want:
 <http://pgadmin.localhost>
 
 User: admin@example.org  
-Pass: mypassword  
+Pass: password  
 
 ## Kubernetes Dashboard
 
@@ -138,7 +138,7 @@ Default: k8sdisturber
 
 **`DBPASSWORD`**  
 The postgresql database name password.  
-Default: mypassword
+Default: password
 
 ## For Developer
 

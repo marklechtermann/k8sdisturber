@@ -1,7 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get install -y nodejs 
+    apt-get install -y nodejs && \
+    npm install -g npm 
 
 WORKDIR /source
 

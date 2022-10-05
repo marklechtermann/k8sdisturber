@@ -1,0 +1,18 @@
+:root {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+
+  --foreground-dark: #242424;
+  --foreground-light: #f8f9fa;
+  --background-dark: #242424;
+  --background-light: #f8f9fa;
+
+  color: var(--foreground-dark);
+  background-color: var(--background-light);
+}
+
+body {
+  margin: 0px;
+}

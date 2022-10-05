@@ -8,8 +8,9 @@ public class ApplicationEnvironmentInfo
     public string? OsVersion { get; set; }
     public int ProcessorCount { get; set; }
     public int ProcessId { get; set; }
-    public IDictionary<string, string>? EnvironmentVariables { get; set; }
+    public IEnumerable<KeyValuePair<string, string>>? EnvironmentVariables { get; set; }
     public string? UserName { get; internal set; }
     public long UserId { get; internal set; }
     public string? InstanceId { get; internal set; }
 }
+
