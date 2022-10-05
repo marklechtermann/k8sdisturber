@@ -78,7 +78,6 @@ const Health: React.FC = () => {
           <TextField
             id="outlined-required"
             label="readyz=false duration (ms)"
-            defaultValue="Hello World"
             value={temporaryStatus.millisecondsIsReadyDuration}
             onChange={(e) => {
               let a = { ...temporaryStatus };
@@ -92,7 +91,6 @@ const Health: React.FC = () => {
           <TextField
             id="outlined-required"
             label="livez=false duration (ms)"
-            defaultValue="Hello World"
             value={temporaryStatus.millisecondsIsAliveDuration}
             onChange={(e) => {
               let a = { ...temporaryStatus };

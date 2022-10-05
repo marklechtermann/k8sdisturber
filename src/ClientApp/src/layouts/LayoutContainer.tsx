@@ -15,14 +15,18 @@ import Paper from "@mui/material/Paper";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
+  Icon,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   PaletteMode,
+  SvgIcon,
 } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Footer } from "./Footer";
 import { Link } from "react-router-dom";
+
+import KubernetesIcon from "../assets/kubernetes-icon.svg";
 
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -35,6 +39,7 @@ import MemoryIcon from "@mui/icons-material/Memory";
 import DatasetIcon from "@mui/icons-material/Dataset";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import { useState } from "react";
+import { padding } from "@mui/system";
 
 const drawerWidth: number = 240;
 
@@ -136,7 +141,7 @@ const LayoutContainer: React.FC<Props> = ({ children }) => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              K8sDisturber {themeColor}
+              K8sDisturber
             </Typography>
 
             <IconButton color="inherit" onClick={toggleThemeColor}>
@@ -160,6 +165,12 @@ const LayoutContainer: React.FC<Props> = ({ children }) => {
               px: [1],
             }}
           >
+            <div style={{ width: "100%", marginRight: "3rem" }}>
+              <img
+                src={KubernetesIcon}
+                style={{ marginLeft: "0.5rem", width: "2rem" }}
+              />
+            </div>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
