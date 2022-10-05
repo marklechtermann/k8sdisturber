@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Button, CircularProgress, Slider } from "@mui/material";
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 
 import Bash from "../components/Bash";
 import Title from "../components/Title";
@@ -26,7 +26,7 @@ const HeavyLoad: React.FC = () => {
     setRequestRunning(true);
     let urls = [];
     for (let i = 1; i <= parallelRequests; i++) {
-      urls.push(`/api/slow?delay=${delay}&uid=${uuid()}`);
+      urls.push(`/api/slow?delay=${delay}&uid=${uuidv4()}`);
     }
 
     const requests = urls.map((url) => fetch(url));
