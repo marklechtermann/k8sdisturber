@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Title from "../components/Title";
+import UserService from "../api/UserService";
 
 interface ApplicationEnvironmentInfo {
   hostname?: string;
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     fetchInfo();
+    UserService.fetchUsers();
   }, []);
 
   const fetchInfo = async () => {

@@ -9,25 +9,11 @@ import {
   Box,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import User from "../api/models/User";
+import UserService from "../api/UserService";
 import Title from "../components/Title";
 
 type Props = {};
-
-enum Gender {
-  Male = 0,
-  Female = 1,
-  Others = 2,
-}
-
-interface User {
-  id: number;
-  gender: Gender;
-  userName: string;
-  firstName: string;
-  lastName: string;
-  avatar: string;
-  email: string;
-}
 
 const Database: React.FC<Props> = ({}) => {
   const [users, setUsers] = useState<User[]>([]);
@@ -54,8 +40,7 @@ const Database: React.FC<Props> = ({}) => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("/api/users?skip=0&take=200");
-      const data = (await response.json()) as User[];
+      const data = await UserService.fetchUsers();
       setUsers(data);
     } catch {
       console.log("Failed to fetch data from /api/user");
@@ -64,8 +49,7 @@ const Database: React.FC<Props> = ({}) => {
 
   const fetchdbstatus = async () => {
     try {
-      const response = await fetch("/api/dbreadyz");
-      setDbstatus(response.status);
+      setDbstatus(await UserService.fetchDbStatus());
     } catch {
       console.log("Failed to fetch data from /api/dbreadyz");
     }
