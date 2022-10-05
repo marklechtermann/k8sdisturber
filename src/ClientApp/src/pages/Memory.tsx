@@ -1,5 +1,7 @@
+import { Box, Button, TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import ApiResult from "../components/ApiResult";
+import Title from "../components/Title";
 
 type Props = {};
 
@@ -39,28 +41,26 @@ const Memory: React.FC<Props> = () => {
 
   return (
     <div>
-      <h1>Memory Allocation</h1>
+      <Title>Memory Allocation</Title>
       <form onSubmit={handleSubmit}>
         <div>Here you can allocate memory. Up to 2 Gbyte can be allocated.</div>
-        <label>Memory (MByte)</label>
-        <div>
-          <input
-            autoComplete="nope"
-            id="memory"
-            name="memory"
-            type="text"
+
+        <Box component="div" sx={{ m: 4 }}>
+          <TextField
+            id="outlined-required"
+            label="Memory (MByte)"
             value={newMemorySize}
             onChange={(e) => setNewMemorySize(parseInt(e.target.value))}
           />
-        </div>
-        <div>
-          {" "}
-          <button type="submit" color="primary">
-            Do it!
-          </button>
-        </div>
+        </Box>
+
+        <Box component="div" sx={{ m: 4 }}>
+          <Button variant="contained" type="submit">
+            Allocate
+          </Button>
+        </Box>
       </form>
-      <h1>Api</h1>
+      <Title>Api</Title>
       <div>
         <ApiResult
           link="/api/memory"
