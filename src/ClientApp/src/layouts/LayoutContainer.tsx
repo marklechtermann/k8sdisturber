@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -16,6 +17,7 @@ import {
   ListItemText,
   PaletteMode,
 } from "@mui/material";
+
 import { Footer } from "./Footer";
 import { Link } from "react-router-dom";
 
@@ -30,8 +32,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import MemoryIcon from "@mui/icons-material/Memory";
 import DatasetIcon from "@mui/icons-material/Dataset";
-import TrafficIcon from "@mui/icons-material/Traffic";
-import { useState } from "react";
+import DeveloperModeIcon from "@mui/icons-material/DeveloperMode";
+import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 
 const drawerWidth: number = 240;
 
@@ -183,7 +185,7 @@ const LayoutContainer: React.FC<Props> = ({ children }) => {
             </ListItemButton>
             <ListItemButton component={Link} to="/heavyload">
               <ListItemIcon>
-                <TrafficIcon />
+                <QueryBuilderIcon />
               </ListItemIcon>
               <ListItemText primary="HeavyLoad" />
             </ListItemButton>
@@ -198,6 +200,15 @@ const LayoutContainer: React.FC<Props> = ({ children }) => {
                 <DatasetIcon />
               </ListItemIcon>
               <ListItemText primary="Database" />
+            </ListItemButton>
+          </List>
+          <Divider sx={{ my: 1 }} />
+          <List component="nav">
+            <ListItemButton component={Link} target="_" to="/swagger">
+              <ListItemIcon>
+                <DeveloperModeIcon />
+              </ListItemIcon>
+              <ListItemText primary="OpenAPI" />
             </ListItemButton>
           </List>
         </Drawer>
