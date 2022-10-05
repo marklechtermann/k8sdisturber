@@ -144,6 +144,12 @@ Default: password
 
 Here you can find information for developers.
 
+## Start a local postgres database
+
+```bash
+scripts/start-local-database.sh
+```
+
 ## Foward postgres database port to your local machine
 
 If you run the postgresql database in Kubernetes, you can forward the ports to localhost.
