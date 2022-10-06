@@ -28,19 +28,20 @@ It includes the following functions:
 kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/k8sdisturber.yaml
 ```
 
-Access without an ingress controller:  
+
+## Without Ingress Controller
 
 ```bash
 kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:8080
 ```
 
-Now you a ready to rock :metal: :  
-
 **<http://localhost:8080/>**
 
-## K8sDisturber with Ingress Controller
+## With Ingress Controller
 
 **<http://disturber.127.0.0.1.nip.io/>**
+
+## Ingress controller - bare metal
 
 If you don't have an ingress controller, read the documentation carefully wire everything up.  
 
@@ -64,7 +65,7 @@ Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
 ## Database
 
-If you want, then you can also use a database. On the route <http://localhost/database> you can see how your backend communicates with a database.  
+If you want, then you can also use a database. On the route <http://pdadmin.127.0.0.1.nip.io/> you can see how your backend communicates with a database.  
 For this, you need to load another Kubernetes manifest into your cluster.
 
 ```bash
