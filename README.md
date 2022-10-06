@@ -25,15 +25,24 @@ It includes the following functions:
 ## Deploy to Kubernetes
 
 ```bash
-kubectl create namespace k8sdisturber
 kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/k8sdisturber.yaml
+```
+
+Access without an ingress controller:  
+
+```bash
 kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:8080
 ```
 
 Now you a ready to rock :metal: :  
+
 **<http://localhost:8080/>**
 
 ## K8sDisturber with Ingress Controller
+
+**<http://disturber.127.0.0.1.nip.io/>**
+
+If you don't have an ingress controller, read the documentation carefully wire everything up.  
 
 > In this example `helm` is used to install the ingress controller  
 > `curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
@@ -53,8 +62,6 @@ helm upgrade --install ingress-nginx ingress-nginx \
 
 Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
-**<http://disturber.127.0.0.1.nip.io/>**
-
 ## Database
 
 If you want, then you can also use a database. On the route <http://localhost/database> you can see how your backend communicates with a database.  
@@ -64,8 +71,9 @@ For this, you need to load another Kubernetes manifest into your cluster.
 kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/database.yaml
 ```
 
-You can access the PGAdmin4 if yout want:  
-<http://pgadmin.localhost>
+You can access the PGAdmin4 if your want:  
+
+**<http://pdadmin.127.0.0.1.nip.io/>**
 
 User: admin@example.org  
 Pass: password  
@@ -113,6 +121,22 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```bash 
 kubectl get pods -A
 ```
+
+Enable the ingress controller addon:  
+
+```bash
+minikube addons enable ingress
+```
+
+Enable a tunnel to your local cluster:  
+
+```bash
+minikube tunnel
+```
+
+> The command "minikube tunnel" asks the user for a password. Unfortunately this is not always displayed correctly by minikube.
+> So please pay attention to the output of the following text "[sudo] password for <user>:".
+
 
 ## Supported environment variables
 
