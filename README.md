@@ -10,10 +10,11 @@ It includes the following functions:
 
 - Demonstration of health check with livez and readyz endpoints
 - The behavior when limits are set
+- Load test example
 - Access to the environment variables
+- Postresql database 
+- PGAdmin support (UI for your database)
 - Hostname, IP adresses, Instance name, UserId, ...
-- Database (postgresql) access (see the K8s YAML file for futher information)
-- PGAdmin support (see the K8s YAML file for futher information)
 
 > **Never operate the K8sDisturber in a public cloud!**  
 > Access to this application is not protected.  
