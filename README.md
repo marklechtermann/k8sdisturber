@@ -22,46 +22,25 @@ It includes the following functions:
 >
 > I warned you :see_no_evil: :hear_no_evil: :speak_no_evil: ;-)
 
-## Deploy to Kubernetes
+Deploy to Kubernetes: 
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/k8sdisturber.yaml
 ```
 
-
-## Without Ingress Controller
+Access **without** Ingress Controller:
 
 ```bash
 kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:8080
 ```
-
+Got to this URL:  
 **<http://localhost:8080/>**
 
-## With Ingress Controller
+Acces **with** Ingress Controller: 
 
+Got to this URL:  
 **<http://disturber.127.0.0.1.nip.io/>**
 
-## Ingress controller - bare metal
-
-If you don't have an ingress controller, read the documentation carefully wire everything up.  
-
-> In this example `helm` is used to install the ingress controller  
-> `curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
-> Further information: <https://helm.sh/docs/intro/install/>
-
-You need an ingress controller if you want to play with this example.
-This example uses `Docker Desktop`. If you want to use a different Kubernetes/Docker installation, you may need to modify the Ingress rules.
-
-And this is how you can install an ingress controller:
-
-```bash
-helm upgrade --install ingress-nginx ingress-nginx \
-  --namespace ingress-nginx \
-  --create-namespace \
-  --repo https://kubernetes.github.io/ingress-nginx 
-```
-
-Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
 ## Database
 
@@ -137,6 +116,28 @@ minikube tunnel
 
 > The command "minikube tunnel" asks the user for a password. Unfortunately this is not always displayed correctly by minikube.
 > So please pay attention to the output of the following text "[sudo] password for <user>:".
+
+## Ingress controller installation - bare metal
+
+If you don't have an ingress controller, read the documentation carefully wire everything up.  
+
+> In this example `helm` is used to install the ingress controller  
+> `curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
+> Further information: <https://helm.sh/docs/intro/install/>
+
+You need an ingress controller if you want to play with this example.
+This example uses `Docker Desktop`. If you want to use a different Kubernetes/Docker installation, you may need to modify the Ingress rules.
+
+And this is how you can install an ingress controller:
+
+```bash
+helm upgrade --install ingress-nginx ingress-nginx \
+  --namespace ingress-nginx \
+  --create-namespace \
+  --repo https://kubernetes.github.io/ingress-nginx 
+```
+
+Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
 
 
 ## Supported environment variables
