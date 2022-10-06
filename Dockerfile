@@ -10,7 +10,6 @@ COPY src .
 
 RUN dotnet publish -c release -o /app 
 
-
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
 ARG K8SVERSION=local
@@ -19,6 +18,10 @@ WORKDIR /app
 
 RUN apt update && \
     apt install -y htop curl net-tools vim &&\
+    curl -L -o /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    chmod +x /usr/local/bin/kubectl
+
+RUN apt update && \
     apt-get clean
 
 COPY --from=build /app .

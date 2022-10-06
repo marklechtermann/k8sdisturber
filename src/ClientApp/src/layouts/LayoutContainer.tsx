@@ -177,6 +177,12 @@ const LayoutContainer: React.FC<Props> = ({ children }) => {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
+            <ListItemButton component={Link} to="/environment">
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Environment" />
+            </ListItemButton>
             <ListItemButton component={Link} to="/health">
               <ListItemIcon>
                 <HeartBrokenIcon />

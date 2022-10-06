@@ -8,6 +8,7 @@ import Health from "./pages/Health";
 import HeavyLoad from "./pages/HeavyLoad";
 import Database from "./pages/Database";
 import LayoutContainer from "./layouts/LayoutContainer";
+import Environment from "./pages/Environment";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home></Home>} />
             <Route path="/home" element={<Home></Home>} />
+            <Route path="/environment" element={<Environment></Environment>} />
             <Route path="/memory" element={<Memory />} />
             <Route path="/health" element={<Health />} />
             <Route path="/heavyload" element={<HeavyLoad />} />

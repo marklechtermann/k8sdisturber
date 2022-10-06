@@ -18,6 +18,7 @@ builder.Services.AddSingleton<InfoService>();
 builder.Services.AddSingleton<AppService>();
 builder.Services.AddTransient<K8sDisturberContext>();
 builder.Services.AddTransient<UserRepositoryService>();
+builder.Services.AddTransient<KubernetesService>();
 
 builder.Services.Configure<AppOptions>(builder.Configuration);
 

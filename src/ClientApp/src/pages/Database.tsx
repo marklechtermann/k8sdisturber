@@ -9,8 +9,8 @@ import {
   Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import User from "../api/models/User";
-import UserService from "../api/UserService";
+import User from "../models/User";
+import UserService from "../services/UserService";
 import Title from "../components/Title";
 
 type Props = {};

@@ -29,6 +29,10 @@ spec:
           env:
             - name: ASPNETCORE_URLS
               value: http://+:8080
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           livenessProbe:
             httpGet:
               path: /api/livez
@@ -81,3 +85,27 @@ spec:
                 name: k8sdisturber
                 port:
                   number: 8080
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: k8sdisturber
+  namespace: k8sdisturber
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: k8sdisturber
+  namespace: k8sdisturber
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: k8sdisturber # Should match name of Role
+subjects:
+  - namespace: k8sdisturber
+    kind: ServiceAccount
+    name: default
