@@ -61,7 +61,7 @@ const Home: React.FC = () => {
           <Slider
             valueLabelDisplay="on"
             step={1}
-            min={0}
+            min={1}
             max={20}
             marks
             value={replicas}

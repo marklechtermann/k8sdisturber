@@ -76,7 +76,7 @@ namespace k8sdisturber.Services
 
         public DeploymentScale SetDeploymentScale(DeploymentScale deploymentScale)
         {
-            if (Client != null && deploymentScale.Replicas >= 0 && deploymentScale.Replicas < 20)
+            if (Client != null && deploymentScale.Replicas > 0 && deploymentScale.Replicas < 20)
             {
                 var scale = Client.ReadNamespacedDeploymentScale("k8sdisturber", K8sDisturberNamespace);
                 scale.Spec.Replicas = deploymentScale.Replicas;
