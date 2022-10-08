@@ -9,8 +9,8 @@ K8sDisturber is a simple application bases on .NET 6 and React.
 It includes the following functions:
 
 - Demonstration of health check with livez and readyz endpoints
-- The behavior when limits are set
-- Load test example
+- The behavior when memory and cpu limits are set
+- Load test example for the load balancer
 - Access to the environment variables
 - Postresql database 
 - PGAdmin support (UI for your database)
@@ -68,6 +68,7 @@ curl -s https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/ku
 ```
 
 ## Kubernetes and WSL2
+
 An easy way to install K8s is the WSL2.  
 
 <https://docs.microsoft.com/en-us/windows/wsl/install>
@@ -75,8 +76,18 @@ An easy way to install K8s is the WSL2.
 If you have Ubuntu installed, then you can very easily install Docker in minikube.  
 
 ```bash
-sudo apt update
-sudo apt install docker
+sudo apt-get remove docker docker-engine docker.io containerd runc && \
+sudo apt-get update && \
+sudo apt-get install ca-certificates curl gnupg lsb-release && \
+sudo mkdir -p /etc/apt/keyrings && \
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --yes --dearmor -o /etc/apt/keyrings/docker.gpg && \
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null  && \
+sudo apt-get update && \
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin && \
+sudo usermod -aG docker $USER && \
+newgrp docker
 ```
 
 The WSL did not start Docker automatically.  
@@ -99,7 +110,7 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 
 ```bash 
-kubectl get pods -A
+kubectl get nodes
 ```
 
 Enable the ingress controller addon:  
@@ -113,32 +124,24 @@ Enable a tunnel to your local cluster:
 ```bash
 minikube tunnel
 ```
+> Do not close this terminal as this process must stay alive for the tunnel to be accessible
 
 > The command "minikube tunnel" asks the user for a password. Unfortunately this is not always displayed correctly by minikube.
 > So please pay attention to the output of the following text "[sudo] password for <user>:".
 
-## Ingress controller installation - bare metal
+## K9s
 
-If you don't have an ingress controller, read the documentation carefully wire everything up.  
+K9s is a terminal based UI to interact with your Kubernetes clusters. The aim of this project is to make it easier to navigate, observe and manage your deployed applications in the wild. K9s continually watches Kubernetes for changes and offers subsequent commands to interact with your observed resources.
 
-> In this example `helm` is used to install the ingress controller  
-> `curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`  
-> Further information: <https://helm.sh/docs/intro/install/>
-
-You need an ingress controller if you want to play with this example.
-This example uses `Docker Desktop`. If you want to use a different Kubernetes/Docker installation, you may need to modify the Ingress rules.
-
-And this is how you can install an ingress controller:
+<https://k9scli.io/>
 
 ```bash
-helm upgrade --install ingress-nginx ingress-nginx \
-  --namespace ingress-nginx \
-  --create-namespace \
-  --repo https://kubernetes.github.io/ingress-nginx 
+mkdir k9s && \
+curl -L -o k9s/k9s.tgz https://github.com/derailed/k9s/releases/download/$(curl  -s https://api.github.com/repos/derailed/k9s/releases/latest | grep tag_name | cut -d '"' -f 4)/k9s_Linux_x86_64.tar.gz && \
+tar -xzf k9s/k9s.tgz -C k9s && \
+sudo install k9s/k9s /usr/local/bin && \
+rm -rf k9s
 ```
-
-Further information: <https://kubernetes.github.io/ingress-nginx/deploy/>
-
 
 ## Supported environment variables
 
