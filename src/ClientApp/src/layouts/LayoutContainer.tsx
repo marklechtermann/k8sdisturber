@@ -11,6 +11,8 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 
+import useThemeColor from "../hooks/useThemeColor";
+
 import {
   ListItemButton,
   ListItemIcon,
@@ -91,7 +93,8 @@ interface Props {
 
 const LayoutContainer: React.FC<Props> = ({ children }) => {
   const [open, setOpen] = useState(true);
-  const [themeColor, setThemeColor] = useState<PaletteMode>("light");
+  const [themeColor, toggleThemeColor] = useThemeColor();
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -101,10 +104,6 @@ const LayoutContainer: React.FC<Props> = ({ children }) => {
       mode: themeColor,
     },
   });
-
-  const toggleThemeColor = () => {
-    setThemeColor(themeColor === "light" ? "dark" : "light");
-  };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -138,7 +137,7 @@ const LayoutContainer: React.FC<Props> = ({ children }) => {
               K8sDisturber
             </Typography>
 
-            <IconButton color="inherit" onClick={toggleThemeColor}>
+            <IconButton color="inherit" onClick={() => toggleThemeColor()}>
               <LightModeIcon />
             </IconButton>
 

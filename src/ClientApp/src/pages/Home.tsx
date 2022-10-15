@@ -38,10 +38,6 @@ const Home: React.FC = () => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(replicas);
-  }, [replicas]);
-
   const fetchInfo = async () => {
     setInfo(await InfoService.getInfo());
     setKubernetesInfo(await KubernetesService.getInfo());
