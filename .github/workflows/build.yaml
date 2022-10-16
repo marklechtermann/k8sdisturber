@@ -1,0 +1,17 @@
+name: Build
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "Dockerfile"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker Build
+        run: |
+          docker build --build-arg K8SVERSION=$GITHUB_SHA -t marklechtermann/k8sdisturber:latest -t marklechtermann/k8sdisturber:$(date +%Y%m%d).$(echo $GITHUB_SHA | cut -c -7) .
