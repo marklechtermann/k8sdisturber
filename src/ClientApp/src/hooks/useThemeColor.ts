@@ -1,7 +1,7 @@
 import { PaletteMode } from "@mui/material";
 import { useState } from "react";
 
-export default function useTheme(): [string | PaletteMode, Function] {
+export default function useTheme(): [PaletteMode, Function] {
   const getValue = () => {
     let themeColor = window.localStorage.getItem("themeColor");
     if (themeColor != "dark" && themeColor != "light") {

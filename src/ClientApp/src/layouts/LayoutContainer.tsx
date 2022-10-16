@@ -99,14 +99,14 @@ const LayoutContainer: React.FC<Props> = ({ children }) => {
     setOpen(!open);
   };
 
-  const darkTheme = createTheme({
+  const theme = createTheme({
     palette: {
       mode: themeColor,
     },
   });
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
