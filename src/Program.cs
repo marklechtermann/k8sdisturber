@@ -4,12 +4,12 @@ using k8sdisturber.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.ConfigureLogging(b => b.AddSimpleConsole(options =>
+builder.Logging.AddSimpleConsole(options =>
     {
         options.IncludeScopes = false;
         options.SingleLine = true;
         options.TimestampFormat = "hh:mm:ss ";
-    }));
+    });
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();

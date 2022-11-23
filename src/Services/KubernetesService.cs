@@ -9,8 +9,12 @@ namespace k8sdisturber.Services
 {
     public class KubernetesService
     {
-        public KubernetesService()
+        private readonly ILogger<AppService>? _logger;
+
+        public KubernetesService(ILogger<AppService>? logger)
         {
+            _logger = logger;
+
             var envPodNamespace = Environment.GetEnvironmentVariable("KUBERNETES_NAMESPACE");
             K8sDisturberNamespace = string.IsNullOrEmpty(envPodNamespace) ? "k8sdisturber" : envPodNamespace;
 
@@ -34,29 +38,35 @@ namespace k8sdisturber.Services
         public KubernetesInfo GetInfo()
         {
             var info = new KubernetesInfo();
-            if (Client != null)
+
+            try
             {
-                info.PodInfos.AddRange(Client.CoreV1.ListNamespacedPod(K8sDisturberNamespace).Items.Select(pod =>
+                if (Client != null)
                 {
-                    return new PodInfo()
+                    info.PodInfos.AddRange(Client.CoreV1.ListNamespacedPod(K8sDisturberNamespace).Items.Select(pod =>
                     {
-                        Name = pod.Metadata.Name,
-                        Ip = pod.Status.PodIP,
-                        Phase = pod.Status.Phase,
-                        StartTime = pod.Status.StartTime
-                    };
-                }
-                ));
+                        return new PodInfo()
+                        {
+                            Name = pod.Metadata.Name,
+                            Ip = pod.Status.PodIP,
+                            Phase = pod.Status.Phase,
+                            StartTime = pod.Status.StartTime
+                        };
+                    }
+                    ));
 
-                var ggg = Client.ReadNamespacedDeploymentScale("k8sdisturber", K8sDisturberNamespace);
-
-                var replicaSet = Client.ListNamespacedReplicaSet(K8sDisturberNamespace).Items.FirstOrDefault(i => i.Metadata.Labels.Contains(new("app", "k8sdisturber")));
-                if (replicaSet != null)
-                {
-                    info.ReplicaStatus.AvailableReplicas = replicaSet.Status.AvailableReplicas;
-                    info.ReplicaStatus.ReadyReplicas = replicaSet.Status.ReadyReplicas;
-                    info.ReplicaStatus.Replicas = replicaSet.Status.Replicas;
+                    var replicaSet = Client.ListNamespacedReplicaSet(K8sDisturberNamespace).Items.FirstOrDefault(i => i.Metadata.Labels.Contains(new("app", "k8sdisturber")));
+                    if (replicaSet != null)
+                    {
+                        info.ReplicaStatus.AvailableReplicas = replicaSet.Status.AvailableReplicas;
+                        info.ReplicaStatus.ReadyReplicas = replicaSet.Status.ReadyReplicas;
+                        info.ReplicaStatus.Replicas = replicaSet.Status.Replicas;
+                    }
                 }
+            }
+            catch (k8s.Autorest.HttpOperationException)
+            {
+                _logger?.LogInformation("K8s ressource not available");
             }
 
             return info;
@@ -65,10 +75,17 @@ namespace k8sdisturber.Services
         public DeploymentScale GetDeploymentScale()
         {
             var deploymentScale = new DeploymentScale();
-            if (Client != null)
+            try
             {
-                var scale = Client.ReadNamespacedDeploymentScale("k8sdisturber", K8sDisturberNamespace);
-                deploymentScale.Replicas = scale.Spec.Replicas ?? -1;
+                if (Client != null)
+                {
+                    var scale = Client.ReadNamespacedDeploymentScale("k8sdisturber", K8sDisturberNamespace);
+                    deploymentScale.Replicas = scale.Spec.Replicas ?? -1;
+                }
+            }
+            catch (k8s.Autorest.HttpOperationException)
+            {
+                _logger?.LogInformation("K8s ressource not available");
             }
 
             return deploymentScale;
@@ -76,11 +93,18 @@ namespace k8sdisturber.Services
 
         public DeploymentScale SetDeploymentScale(DeploymentScale deploymentScale)
         {
-            if (Client != null && deploymentScale.Replicas > 0 && deploymentScale.Replicas < 20)
+            try
             {
-                var scale = Client.ReadNamespacedDeploymentScale("k8sdisturber", K8sDisturberNamespace);
-                scale.Spec.Replicas = deploymentScale.Replicas;
-                Client.ReplaceNamespacedDeploymentScale(scale, "k8sdisturber", K8sDisturberNamespace);
+                if (Client != null && deploymentScale.Replicas > 0 && deploymentScale.Replicas < 20)
+                {
+                    var scale = Client.ReadNamespacedDeploymentScale("k8sdisturber", K8sDisturberNamespace);
+                    scale.Spec.Replicas = deploymentScale.Replicas;
+                    Client.ReplaceNamespacedDeploymentScale(scale, "k8sdisturber", K8sDisturberNamespace);
+                }
+            }
+            catch (k8s.Autorest.HttpOperationException)
+            {
+                _logger?.LogInformation("K8s ressource not available");
             }
 
             return GetDeploymentScale();
