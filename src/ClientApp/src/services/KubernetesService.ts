@@ -1,18 +1,18 @@
 import axios from "axios";
-import KubernetesInfo from "../models/KubernetesInfo";
-import Replicas from "../models/Replicas";
+import IKubernetesInfo from "../models/IKubernetesInfo";
+import IReplicas from "../models/IReplicas";
 
 const BASE_URL = "";
 
 export default {
-  getInfo: async function (): Promise<KubernetesInfo> {
-    var response = await axios.get<KubernetesInfo>(
+  getInfo: async function (): Promise<IKubernetesInfo> {
+    var response = await axios.get<IKubernetesInfo>(
       `${BASE_URL}/api/kubernetes/info`
     );
     return response.data;
   },
-  getReplicas: async function (): Promise<Replicas> {
-    var response = await axios.get<Replicas>(
+  getReplicas: async function (): Promise<IReplicas> {
+    var response = await axios.get<IReplicas>(
       `${BASE_URL}/api/kubernetes/deploymentscale`
     );
     return response.data;

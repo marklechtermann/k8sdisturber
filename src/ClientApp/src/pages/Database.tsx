@@ -9,13 +9,13 @@ import {
   Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import User from "../models/User";
+import User from "../models/IUser";
 import UserService from "../services/UserService";
 import Title from "../components/Title";
 
 type Props = {};
 
-const Database: React.FC<Props> = ({}) => {
+const Database: React.FC<Props> = ({ }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [dbstatus, setDbstatus] = useState<number>(0);
   useEffect(() => {

@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../models/IUser";
 
 export default class UserService {
   public static async fetchUsers(): Promise<User[]> {

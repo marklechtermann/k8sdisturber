@@ -9,27 +9,14 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Title from "../components/Title";
-import UserService from "../services/UserService";
-
-interface ApplicationEnvironmentInfo {
-  hostname?: string;
-  version?: string;
-  ipAdresses?: string[];
-  osVersion?: string;
-  processorCount?: number;
-  processId?: number;
-  environmentVariables?: { key: string; value: string }[];
-  userName?: string;
-  userId?: number;
-  instanceId?: string;
-}
+import { IApplicationEnvironmentInfo } from "../models/IApplicationEnvironmentInfo";
 
 const Environment: React.FC = () => {
-  const [info, setInfo] = useState<ApplicationEnvironmentInfo>({});
+  const [info, setInfo] = useState<IApplicationEnvironmentInfo>({});
 
   useEffect(() => {
+
     fetchInfo();
-    UserService.fetchUsers();
   }, []);
 
   const fetchInfo = async () => {

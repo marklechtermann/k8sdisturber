@@ -1,4 +1,4 @@
-export interface ApplicationEnvironmentInfo {
+export interface IApplicationEnvironmentInfo {
   hostname?: string;
   version?: string;
   ipAdresses?: string[];

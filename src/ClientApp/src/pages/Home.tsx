@@ -1,6 +1,5 @@
 import {
   Box,
-  Grid,
   Paper,
   Slider,
   Table,
@@ -13,14 +12,13 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Title from "../components/Title";
-import { ApplicationEnvironmentInfo } from "../models/ApplicationEnvironmentInfo";
-import KubernetesInfo from "../models/KubernetesInfo";
+import IKubernetesInfo from "../models/IKubernetesInfo";
 import KubernetesService from "../services/KubernetesService";
-import InfoService from "../services/InfoService";
+import useServerInfo from "../hooks/useServerInfo";
 
 const Home: React.FC = () => {
-  const [info, setInfo] = useState<ApplicationEnvironmentInfo>({});
-  const [kubernetesInfo, setKubernetesInfo] = useState<KubernetesInfo>({});
+  const { info } = useServerInfo();
+  const [kubernetesInfo, setKubernetesInfo] = useState<IKubernetesInfo>({});
   const [replicas, setReplicas] = useState<number>(1);
 
   useEffect(() => {
@@ -39,7 +37,6 @@ const Home: React.FC = () => {
   }, []);
 
   const fetchInfo = async () => {
-    setInfo(await InfoService.getInfo());
     setKubernetesInfo(await KubernetesService.getInfo());
   };
 
@@ -111,35 +108,35 @@ const Home: React.FC = () => {
             <TableBody>
               <TableRow>
                 <TableCell>Application Version</TableCell>
-                <TableCell>{info.version}</TableCell>
+                <TableCell>{info?.version}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Instance ID</TableCell>
-                <TableCell>{info.instanceId}</TableCell>
+                <TableCell>{info?.instanceId}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Hostname</TableCell>
-                <TableCell>{info.hostname}</TableCell>
+                <TableCell>{info?.hostname}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Username</TableCell>
-                <TableCell>{info.userName}</TableCell>
+                <TableCell>{info?.userName}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>User ID</TableCell>
-                <TableCell>{info.userId}</TableCell>
+                <TableCell>{info?.userId}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>OS version</TableCell>
-                <TableCell>{info.osVersion}</TableCell>
+                <TableCell>{info?.osVersion}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Processor count</TableCell>
-                <TableCell>{info.processorCount}</TableCell>
+                <TableCell>{info?.processorCount}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Process ID</TableCell>
-                <TableCell>{info.processId}</TableCell>
+                <TableCell>{info?.processId}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>IP adresses</TableCell>

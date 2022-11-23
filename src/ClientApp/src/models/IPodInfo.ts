@@ -1,4 +1,4 @@
-export default interface PodInfo {
+export default interface IPodInfo {
   name: string;
   ip: string;
   phase: string;
