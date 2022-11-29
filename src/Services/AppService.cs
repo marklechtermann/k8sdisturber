@@ -1,66 +1,60 @@
-using System.Net;
-using k8sdisturber.Models;
 using Microsoft.Extensions.Options;
 
 namespace k8sdisturber.Services;
 
 public class AppService
 {
-    private readonly ILogger<AppService> logger;
-    private readonly AppOptions? options;
-    private bool isAlive = false;
-    private bool isReady = false;
-    private Task? temporaryReadyStateTask;
-    private Task? temporaryAliveStateTask;
-    private Task? readyStateDelayTask;
-    private Task? aliveStateDelayTask;
-    private byte[] memory = new byte[0];
-    private static Random random = new Random();
+    private readonly ILogger<AppService> _logger;
+    private readonly AppOptions? _options;
+    private bool _isAlive;
+    private bool _isReady;
+    private byte[] _memory = Array.Empty<byte>();
+    private static readonly Random _random = new();
 
     public AppService(ILogger<AppService> logger, IOptions<AppOptions> options)
     {
-        this.logger = logger;
-        this.options = options?.Value;
+        _logger = logger;
+        _options = options?.Value;
     }
 
     public void Initialize()
     {
-        if (this.options != null && this.options.LivenessDelay > 0)
+        if (_options != null && _options.LivenessDelay > 0)
         {
-            this.IsAlive = false;
-            this.SetAliveStateWithDelay(this.options.LivenessDelay, true);
+            IsAlive = false;
+            SetAliveStateWithDelay(_options.LivenessDelay, true);
         }
         else
         {
-            this.IsAlive = true;
+            IsAlive = true;
         }
 
-        if (this.options != null && this.options.ReadinessDelay > 0)
+        if (_options != null && _options.ReadinessDelay > 0)
         {
-            this.IsReady = false;
-            this.SetReadyStateWithDelay(this.options.ReadinessDelay, true);
+            IsReady = false;
+            SetReadyStateWithDelay(_options.ReadinessDelay, true);
         }
         else
         {
-            this.IsReady = true;
+            IsReady = true;
         }
     }
 
     public int AllocatedMegaBytes
     {
-        get => memory.Length / 1000000;
+        get => _memory.Length / 1000000;
         set
         {
             try
             {
                 var v = Math.Min(Math.Max(0, value), 2147);
-                memory = new byte[1000000 * v];
-                random.NextBytes(memory);
+                _memory = new byte[1000000 * v];
+                _random.NextBytes(_memory);
                 GC.Collect();
             }
             catch (OutOfMemoryException)
             {
-                this.logger.LogError("Out of memory! Terminating Application");
+                _logger.LogError("Out of memory! Terminating Application");
                 Environment.Exit(1);
             }
         }
@@ -68,76 +62,80 @@ public class AppService
 
     public bool IsReady
     {
-        get => isReady;
+        get => _isReady;
         set
         {
-            if (isReady != value)
+            if (_isReady != value)
             {
-                isReady = value;
-                this.logger?.LogInformation($"IsReady is {this.isReady}");
+                _isReady = value;
+                _logger?.LogInformation("Ready state changed {_isReady}", _isReady);
             }
         }
     }
 
     public bool IsAlive
     {
-        get => isAlive;
+        get => _isAlive;
         set
         {
-            if (isAlive != value)
+            if (_isAlive != value)
             {
-                isAlive = value;
-                this.logger?.LogInformation($"IsAlive is {this.isAlive}");
+                _isAlive = value;
+                _logger?.LogInformation("IsAlive state changed {_isAlive}", _isAlive);
             }
         }
     }
 
     public void SetReadyStateWithDelay(int millisecondsDelay, bool isReady)
     {
-        readyStateDelayTask = Task.Run(async () =>
+        Task.Run(async () =>
         {
-            this.logger.LogInformation($"Set ready state to {isReady} in {millisecondsDelay} ms.");
+            _logger.LogInformation("Set IsReady delay {MillisecondsDelay}", millisecondsDelay);
             await Task.Delay(millisecondsDelay);
-            this.IsReady = isReady;
+            IsReady = isReady;
         });
     }
 
     public void SetAliveStateWithDelay(int millisecondsDelay, bool isAlive)
     {
-        aliveStateDelayTask = Task.Run(async () =>
+        Task.Run(async () =>
         {
-            this.logger.LogInformation($"Set alive state to {isAlive} in {millisecondsDelay} ms.");
+            _logger.LogInformation("Set IsAlive delay {MillisecondsDelay}", millisecondsDelay);
             await Task.Delay(millisecondsDelay);
-            this.IsAlive = isAlive;
+            IsAlive = isAlive;
         });
     }
 
     public void SetTemporaryReadyState(int millisecondsDuration, bool isReady)
     {
-        temporaryReadyStateTask = Task.Run(async () =>
-        {
-            this.logger.LogInformation($"Set temporary ready state to {isReady} for {millisecondsDuration} ms.");
-            bool prevValue = this.IsReady;
-            this.IsReady = isReady;
-            await Task.Delay(millisecondsDuration).ContinueWith((t) =>
-            {
-                this.logger.LogInformation($"Reset temporary ready state to {prevValue}.");
-                this.IsReady = prevValue;
-            });
-        });
+        Task.Run(async () =>
+       {
+           _logger.LogInformation("Set temporary IsReady delay {MillisecondsDuration}", millisecondsDuration);
+
+           var prevValue = IsReady;
+           IsReady = isReady;
+           await Task.Delay(millisecondsDuration).ContinueWith((t) =>
+           {
+               _logger.LogInformation("Reset temporary IsReady {MillisecondsDuration}", millisecondsDuration);
+
+               IsReady = prevValue;
+           });
+       });
     }
 
     public void SetTemoraryAliveState(int millisecondsDuration, bool isAlive)
     {
-        temporaryAliveStateTask = Task.Run(async () =>
+        Task.Run(async () =>
         {
-            this.logger.LogInformation($"Set temporary alive state to {isAlive} for {millisecondsDuration} ms.");
-            bool prevValue = this.IsAlive;
-            this.IsAlive = isAlive;
+            _logger.LogInformation("Set temporary IsAlive delay {MillisecondsDuration}", millisecondsDuration);
+
+            var prevValue = IsAlive;
+            IsAlive = isAlive;
             await Task.Delay(millisecondsDuration).ContinueWith((t) =>
             {
-                this.logger.LogInformation($"Reset temporary alive state to {prevValue}.");
-                this.IsAlive = prevValue;
+                _logger.LogInformation($"Reset temporary IsAlive delay");
+
+                IsAlive = prevValue;
             });
         });
     }

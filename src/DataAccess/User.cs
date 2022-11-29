@@ -1,5 +1,7 @@
 using static Bogus.DataSets.Name;
 
+namespace k8sdisturber.DataAccess;
+
 public class User
 {
     public int Id { get; set; }

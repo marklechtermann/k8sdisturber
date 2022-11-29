@@ -9,25 +9,12 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Title from "../components/Title";
-import { IApplicationEnvironmentInfo } from "../models/IApplicationEnvironmentInfo";
+
+import useServerInfo from "../hooks/useServerInfo";
 
 const Environment: React.FC = () => {
-  const [info, setInfo] = useState<IApplicationEnvironmentInfo>({});
 
-  useEffect(() => {
-
-    fetchInfo();
-  }, []);
-
-  const fetchInfo = async () => {
-    const response = await fetch("/api/info");
-    try {
-      const data = await response.json();
-      setInfo(data);
-    } catch {
-      console.log("Failed to fetch data from /api/info");
-    }
-  };
+  const { info } = useServerInfo();
 
   return (
     <>

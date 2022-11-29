@@ -1,48 +1,39 @@
-namespace k8sdisturber.DataAccess
+namespace k8sdisturber.DataAccess;
+
+public class UserRepositoryService
 {
-    public class UserRepositoryService
+    private readonly ILogger<UserRepositoryService>? _logger;
+    private readonly K8sDisturberContext _context;
+
+    public UserRepositoryService(ILogger<UserRepositoryService>? logger, K8sDisturberContext context)
     {
-        private readonly ILogger<UserRepositoryService>? logger;
-        private readonly K8sDisturberContext context;
+        _logger = logger;
+        _context = context ?? throw new ArgumentException("DB context is null");
+    }
 
-        public UserRepositoryService(ILogger<UserRepositoryService>? logger, K8sDisturberContext context)
+    public bool DatabaseAvailable => _context.Database.CanConnect();
+
+    public IEnumerable<User> GetUsers(int skip, int take)
+    {
+        if (!DatabaseAvailable || _context.Users == null)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("DB context is null");
-            }
-
-            this.logger = logger;
-            this.context = context;
+            _logger?.LogWarning("Database not available");
+            return new List<User>();
         }
 
-        public bool DatabaseAvailable
+        _context.EnsureInitializedAsync().Wait();
+        return _context.Users.OrderBy(u => u.Id).Skip(skip).Take(take).ToList();
+    }
+
+    internal User? GetUserById(int id)
+    {
+        if (!DatabaseAvailable || _context.Users == null)
         {
-            get { return context.Database.CanConnect(); }
+            _logger?.LogWarning("Database not available");
+            return new User();
         }
 
-        public IEnumerable<User> GetUsers(int skip, int take)
-        {
-            if (!this.DatabaseAvailable || context.Users == null)
-            {
-                this.logger?.LogWarning("Database not available");
-                return new List<User>();
-            }
-
-            context.EnsureInitializedAsync().Wait();
-            return context.Users.OrderBy(u => u.Id).Skip(skip).Take(take).ToList();
-        }
-
-        internal User? GetUserById(int id)
-        {
-            if (!this.DatabaseAvailable || context.Users == null)
-            {
-                this.logger?.LogWarning("Database not available");
-                return new User();
-            }
-
-            context.EnsureInitializedAsync().Wait();
-            return context.Users.FirstOrDefault(u => u.Id == id);
-        }
+        _context.EnsureInitializedAsync().Wait();
+        return _context.Users.FirstOrDefault(u => u.Id == id);
     }
 }

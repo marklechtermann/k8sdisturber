@@ -8,6 +8,7 @@ export default {
     var response = await axios.get<IApplicationEnvironmentInfo>(
       `${BASE_URL}/api/info`
     );
+
     return response.data;
   },
 };
