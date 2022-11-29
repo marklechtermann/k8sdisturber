@@ -37,7 +37,7 @@ kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:8080
 Got to this URL:  
 **<http://localhost:8080/>**
 
-Acces **with** Ingress Controller: 
+Acces **with** a Ingress Controller: 
 
 Got to this URL:  
 **<http://disturber.127.0.0.1.nip.io/>**
