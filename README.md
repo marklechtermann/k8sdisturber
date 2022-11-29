@@ -5,7 +5,7 @@
 You know how it is, you want to explain Kubernetes to someone and you need an application to play with.  
 K8sDisturber is such an application.
 
-K8sDisturber is a simple application bases on .NET 6 and React.
+K8sDisturber is a simple application bases on .NET 7 and React.
 It includes the following functions:
 
 - Demonstration of health check with livez and readyz endpoints
