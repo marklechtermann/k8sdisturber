@@ -1,4 +1,4 @@
-﻿using k8sdisturber.DataAccess;
+using k8sdisturber.DataAccess;
 using k8sdisturber.Models;
 using k8sdisturber.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -9,23 +9,21 @@ namespace k8sdisturber.Controllers;
 [Route("/api/")]
 public class AppController : ControllerBase
 {
-    private readonly ILogger<AppController> logger;
-    private readonly UserRepositoryService userRepositoryService;
-    private readonly AppService appService;
-    private readonly InfoService infoService;
+    private readonly ILogger<AppController> _logger;
+    private readonly UserRepositoryService _userRepositoryService;
+    private readonly AppService _appService;
 
-    public AppController(ILogger<AppController> logger, UserRepositoryService userRepositoryService, AppService appService, InfoService infoService)
+    public AppController(ILogger<AppController> logger, UserRepositoryService userRepositoryService, AppService appService)
     {
-        this.logger = logger;
-        this.userRepositoryService = userRepositoryService;
-        this.appService = appService;
-        this.infoService = infoService;
+        _logger = logger;
+        _userRepositoryService = userRepositoryService;
+        _appService = appService;
     }
 
     [HttpDelete]
     public IActionResult Delete()
     {
-        logger.LogInformation("Request service deletion. Have a nice day!");
+        _logger.LogInformation("Request service deletion. Have a nice day!");
         Task.Delay(2000).ContinueWith(a => { Environment.Exit(1); });
         return Ok();
     }
@@ -34,20 +32,20 @@ public class AppController : ControllerBase
     [Produces("text/plain")]
     public IActionResult ReadyZ()
     {
-        return this.appService.IsReady ? Ok("ok") : StatusCode(503, "fail");
+        return _appService.IsReady ? Ok("ok") : StatusCode(503, "fail");
     }
 
     [HttpGet("livez")]
     [Produces("text/plain")]
     public IActionResult LiveZ()
     {
-        return this.appService.IsAlive ? Ok("ok") : StatusCode(503, "fail");
+        return _appService.IsAlive ? Ok("ok") : StatusCode(503, "fail");
     }
 
     [HttpGet("dbreadyz")]
     public IActionResult GetDatabaseStatus()
     {
-        return this.userRepositoryService.DatabaseAvailable ? Ok("ok") : StatusCode(503, "database down");
+        return _userRepositoryService.DatabaseAvailable ? Ok("ok") : StatusCode(503, "database down");
     }
 
     [HttpGet("status")]
@@ -55,29 +53,29 @@ public class AppController : ControllerBase
     {
         return new Status()
         {
-            IsAlive = this.appService.IsAlive,
-            IsReady = this.appService.IsReady
+            IsAlive = _appService.IsAlive,
+            IsReady = _appService.IsReady
         };
     }
 
     [HttpPut("status")]
     public ActionResult<Status> SetStatus(Status status)
     {
-        this.appService.IsAlive = status.IsAlive;
-        this.appService.IsReady = status.IsReady;
+        _appService.IsAlive = status.IsAlive;
+        _appService.IsReady = status.IsReady;
 
         return new Status()
         {
-            IsAlive = this.appService.IsAlive,
-            IsReady = this.appService.IsReady
+            IsAlive = _appService.IsAlive,
+            IsReady = _appService.IsReady
         };
     }
 
     [HttpPost("temporarystatus")]
     public ActionResult<TemporaryStatus> SetTemporaryStatus(TemporaryStatus status)
     {
-        this.appService.SetTemoraryAliveState(status.MillisecondsIsAliveDuration, status.IsAlive);
-        this.appService.SetTemporaryReadyState(status.MillisecondsIsReadyDuration, status.IsReady);
+        _appService.SetTemoraryAliveState(status.MillisecondsIsAliveDuration, status.IsAlive);
+        _appService.SetTemporaryReadyState(status.MillisecondsIsReadyDuration, status.IsReady);
 
         return status;
     }

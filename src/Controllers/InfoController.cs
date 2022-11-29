@@ -1,4 +1,4 @@
-﻿using k8sdisturber.Models;
+using k8sdisturber.Models;
 using k8sdisturber.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,18 +8,16 @@ namespace k8sdisturber.Controllers;
 [Route("/api/info/")]
 public class InfoController : ControllerBase
 {
-    private readonly ILogger<InfoController> _logger;
-    private readonly InfoService infoService;
+    private readonly InfoService _infoService;
 
-    public InfoController(ILogger<InfoController> logger, InfoService infoService)
+    public InfoController(InfoService infoService)
     {
-        _logger = logger;
-        this.infoService = infoService;
+        _infoService = infoService;
     }
 
     [HttpGet()]
     public ActionResult<ApplicationEnvironmentInfo> Info()
     {
-        return Ok(infoService.ApplicationEnvironmentInfo);
+        return Ok(_infoService.ApplicationEnvironmentInfo);
     }
 }

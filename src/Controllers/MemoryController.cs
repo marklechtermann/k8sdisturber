@@ -1,4 +1,3 @@
-﻿using k8sdisturber.DataAccess;
 using k8sdisturber.Models;
 using k8sdisturber.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -9,25 +8,23 @@ namespace k8sdisturber.Controllers;
 [Route("/api/memory/")]
 public class MemoryController : ControllerBase
 {
-    private readonly ILogger<AppController> logger;
-    private readonly AppService appService;
+    private readonly AppService _appService;
 
-    public MemoryController(ILogger<AppController> logger, UserRepositoryService userRepositoryService, AppService appService, InfoService infoService)
+    public MemoryController(AppService appService)
     {
-        this.logger = logger;
-        this.appService = appService;
+        _appService = appService;
     }
 
     [HttpGet()]
     public ActionResult<MemoryAllocation> GetAllocatedMegaBytes()
     {
-        return Ok(new MemoryAllocation() { AllocatedMegaBytes = this.appService.AllocatedMegaBytes });
+        return Ok(new MemoryAllocation() { AllocatedMegaBytes = _appService.AllocatedMegaBytes });
     }
 
     [HttpPut()]
     public ActionResult<MemoryAllocation> PutAllocatedMegaBytes(MemoryAllocation memoryRequest)
     {
-        this.appService.AllocatedMegaBytes = memoryRequest.AllocatedMegaBytes;
-        return Ok(new MemoryAllocation() { AllocatedMegaBytes = this.appService.AllocatedMegaBytes });
+        _appService.AllocatedMegaBytes = memoryRequest.AllocatedMegaBytes;
+        return Ok(new MemoryAllocation() { AllocatedMegaBytes = _appService.AllocatedMegaBytes });
     }
 }

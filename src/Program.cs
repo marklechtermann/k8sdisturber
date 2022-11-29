@@ -1,6 +1,8 @@
-using k8sdisturber.Services;
+#pragma warning disable CA1852
+
 using k8sdisturber;
 using k8sdisturber.DataAccess;
+using k8sdisturber.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +39,11 @@ app.MapControllerRoute(
 app.MapFallbackToFile("index.html");
 
 var appService = app.Services.GetService<AppService>();
-if (appService == null) throw new InvalidOperationException();
+if (appService == null)
+{
+    throw new InvalidOperationException();
+}
+
 appService.Initialize();
 
 var ctx = app.Services.GetService<K8sDisturberContext>();

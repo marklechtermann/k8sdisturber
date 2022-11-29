@@ -1,32 +1,29 @@
 using k8sdisturber.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
-namespace k8sdisturber.Controllers
+namespace k8sdisturber.Controllers;
+
+[ApiController]
+[Route("/api/users")]
+public class UsersController : ControllerBase
 {
-    [ApiController]
-    [Route("/api/users")]
-    public class UsersController : ControllerBase
+    private readonly UserRepositoryService _userRepositoryService;
+
+    public UsersController(UserRepositoryService userRepositoryService)
     {
-        private readonly ILogger<AppController> logger;
-        private readonly UserRepositoryService userRepositoryService;
+        _userRepositoryService = userRepositoryService;
+    }
 
-        public UsersController(ILogger<AppController> logger, UserRepositoryService userRepositoryService)
-        {
-            this.logger = logger;
-            this.userRepositoryService = userRepositoryService;
-        }
+    [HttpGet()]
+    public IEnumerable<User> GetUsers(int skip, int take)
+    {
+        return _userRepositoryService.GetUsers(skip, take);
+    }
 
-        [HttpGet()]
-        public IEnumerable<User> GetUsers(int skip, int take)
-        {
-            return this.userRepositoryService.GetUsers(skip, take);
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<User?> GetUserById(int id)
-        {
-            var user = this.userRepositoryService.GetUserById(id);
-            return user != null ? Ok(user) : NotFound();
-        }
+    [HttpGet("{id}")]
+    public ActionResult<User?> GetUserById(int id)
+    {
+        var user = _userRepositoryService.GetUserById(id);
+        return user != null ? Ok(user) : NotFound();
     }
 }

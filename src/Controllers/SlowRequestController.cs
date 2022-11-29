@@ -8,28 +8,28 @@ namespace k8sdisturber.Controllers;
 [Route("/api/slow/")]
 public class SlowRequestController : ControllerBase
 {
-    private static readonly object slowLock = new object();
+    private static readonly object _slowLock = new();
 
-    private readonly ILogger<AppController> logger;
-    private readonly InfoService infoService;
+    private readonly ILogger<AppController> _logger;
+    private readonly InfoService _infoService;
 
-    public SlowRequestController(ILogger<AppController> logger, AppService appService, InfoService infoService)
+    public SlowRequestController(ILogger<AppController> logger, InfoService infoService)
     {
-        this.logger = logger;
-        this.infoService = infoService;
+        _logger = logger;
+        _infoService = infoService;
     }
 
     [HttpGet()]
     public ActionResult<SlowRequest> Slow(int delay)
     {
         var start = DateTime.Now;
-        logger.LogInformation("Slow Request: Enter");
-        lock (slowLock)
+        _logger.LogInformation("Slow Request: Enter");
+        lock (_slowLock)
         {
-            logger.LogInformation($"Slow Request: Wait {delay}...");
+            _logger.LogInformation("Slow request {Delay}", delay);
             Thread.Sleep(Math.Max(0, delay));
         }
-        logger.LogInformation($"Slow Request: Finished");
-        return Ok(new SlowRequest() { Start = start, End = DateTime.Now, InstanceId = this.infoService.ApplicationEnvironmentInfo.InstanceId, Hostname = this.infoService.ApplicationEnvironmentInfo.Hostname });
+        _logger.LogInformation($"Slow Request: Finished");
+        return Ok(new SlowRequest() { Start = start, End = DateTime.Now, InstanceId = _infoService.ApplicationEnvironmentInfo.InstanceId, Hostname = _infoService.ApplicationEnvironmentInfo.Hostname });
     }
 }
