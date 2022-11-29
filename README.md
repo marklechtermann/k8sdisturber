@@ -109,7 +109,7 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 
-```bash 
+```bash
 kubectl get nodes
 ```
 
@@ -124,10 +124,10 @@ Enable a tunnel to your local cluster:
 ```bash
 minikube tunnel
 ```
-> Do not close this terminal as this process must stay alive for the tunnel to be accessible
 
+> Do not close this terminal as this process must stay alive for the tunnel to be accessible
 > The command "minikube tunnel" asks the user for a password. Unfortunately this is not always displayed correctly by minikube.
-> So please pay attention to the output of the following text "[sudo] password for <user>:".
+> So please pay attention to the output of the following text "[sudo] password for user:".
 
 ## K9s
 

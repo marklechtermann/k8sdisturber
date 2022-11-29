@@ -8,7 +8,8 @@ const QUERY_KEY = "ENVIRONMENT_VARIABLES";
 export default function useServerInfo(): {
   info?: IApplicationEnvironmentInfo;
 } {
-  const { data } = useQuery(["QUERY_KEY"], {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY],
     queryFn: async () => {
       return await infoService.getInfo();
     },
