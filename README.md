@@ -18,7 +18,8 @@ It includes the following functions:
 
 > **Never operate the K8sDisturber in a public cloud!**  
 > Access to this application is not protected.  
-> The operation of the K8sDisturber is for demonstration purposes only.
+> We use default passwords for everything, a lot of role * and other nasty stuff.  
+> The operation of the K8sDisturber is for **demonstration purposes** only.
 >
 > I warned you :see_no_evil: :hear_no_evil: :speak_no_evil: ;-)
 
