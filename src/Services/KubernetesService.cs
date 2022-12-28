@@ -53,6 +53,10 @@ public class KubernetesService
                 }
             }
         }
+        catch (HttpRequestException)
+        {
+            _logger?.LogInformation("K8s API server not available");
+        }
         catch (k8s.Autorest.HttpOperationException)
         {
             _logger?.LogInformation("K8s ressource not available");
@@ -72,6 +76,10 @@ public class KubernetesService
                 deploymentScale.Replicas = scale.Spec.Replicas ?? -1;
             }
         }
+        catch (HttpRequestException)
+        {
+            _logger?.LogInformation("K8s API server not available");
+        }
         catch (k8s.Autorest.HttpOperationException)
         {
             _logger?.LogInformation("K8s ressource not available");
@@ -90,6 +98,10 @@ public class KubernetesService
                 scale.Spec.Replicas = deploymentScale.Replicas;
                 Client.ReplaceNamespacedDeploymentScale(scale, "k8sdisturber", K8sDisturberNamespace);
             }
+        }
+        catch (HttpRequestException)
+        {
+            _logger?.LogInformation("K8s API server not available");
         }
         catch (k8s.Autorest.HttpOperationException)
         {
