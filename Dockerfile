@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
+LABEL org.opencontainers.image.source=https://github.com/marklechtermann/k8sdisturber
+
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g npm 
