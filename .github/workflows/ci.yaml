@@ -14,14 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Log in to registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-
       - name: Docker Build
         run: |
           docker build --build-arg K8SVERSION=$GITHUB_SHA -t ghcr.io/marklechtermann/k8sdisturber:latest -t ghcr.io/marklechtermann/k8sdisturber:$(date +%Y%m%d).$(echo $GITHUB_SHA | cut -c -7) .
       - name: Docker Push
         run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker push ghcr.io/marklechtermann/k8sdisturber:latest 
           docker push ghcr.io/marklechtermann/k8sdisturber:$(date +%Y%m%d).$(echo $GITHUB_SHA | cut -c -7)
       - name: Docker Logout
