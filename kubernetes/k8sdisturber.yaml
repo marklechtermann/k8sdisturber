@@ -21,7 +21,7 @@ spec:
         app: k8sdisturber
     spec:
       containers:
-        - image: marklechtermann/k8sdisturber
+        - image: ghcr.io/marklechtermann/k8sdisturber
           name: k8sdisturber
           ports:
             - containerPort: 8080
