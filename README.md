@@ -12,7 +12,7 @@ It includes the following functions:
 - The behavior when memory and cpu limits are set
 - Load test example for the load balancer
 - Access to the environment variables
-- Postresql database 
+- Postresql database
 - PGAdmin support (UI for your database)
 - Hostname, IP adresses, Instance name, UserId, ...
 
@@ -23,7 +23,7 @@ It includes the following functions:
 >
 > I warned you :see_no_evil: :hear_no_evil: :speak_no_evil: ;-)
 
-Deploy to Kubernetes: 
+Deploy to Kubernetes:
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/marklechtermann/k8sdisturber/master/kubernetes/k8sdisturber.yaml
@@ -34,14 +34,14 @@ Access **without** Ingress Controller:
 ```bash
 kubectl port-forward service/k8sdisturber -n k8sdisturber 8080:8080
 ```
+
 Got to this URL:  
 **<http://localhost:8080/>**
 
-Acces **with** a Ingress Controller: 
+Acces **with** a Ingress Controller:
 
 Got to this URL:  
 **<http://disturber.127.0.0.1.nip.io/>**
-
 
 ## Database
 
