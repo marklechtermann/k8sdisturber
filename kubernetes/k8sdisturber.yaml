@@ -11,7 +11,7 @@ metadata:
   name: k8sdisturber
   namespace: k8sdisturber
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: k8sdisturber
