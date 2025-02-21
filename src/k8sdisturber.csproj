@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="35.6.1" />
+    <PackageReference Include="Bogus" Version="35.6.2" />
     <PackageReference Include="KubernetesClient" Version="13.0.37" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="8.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
